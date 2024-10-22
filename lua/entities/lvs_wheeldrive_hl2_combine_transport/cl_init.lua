@@ -37,7 +37,7 @@ end
 function ENT:OnSpawn(PObj)
     self.interiorParts = {}
 
-    local interiorPos = Vector(0, -130, 70)
+    local interiorPos = Vector(0, -200, 70)
     local interiorModels = {
         "models/riggs9162/apc_interior_0.mdl",
         "models/riggs9162/apc_interior_1.mdl",
@@ -59,6 +59,13 @@ function ENT:OnSpawn(PObj)
         interior:Activate()
 
         interior:SetNoDraw(true)
+
+        // Stretch the model to fit the interior
+        local scale = Vector(1, 1.5, 1)
+
+        local mat = Matrix()
+        mat:Scale(scale)
+        interior:EnableMatrix("RenderMultiply", mat)
 
         self.interiorParts[k] = interior
     end
@@ -97,7 +104,7 @@ function ENT:Draw()
         if ( system.HasFocus() ) then
             local dynamicLighting = DynamicLight(self:EntIndex(), true)
             if ( dynamicLighting ) then
-                local pos = self:LocalToWorld(Vector(0, -35, 85))
+                local pos = self:LocalToWorld(Vector(0, -60, 85))
                 dynamicLighting.pos = pos
                 dynamicLighting.r = 140
                 dynamicLighting.g = 200
@@ -106,6 +113,8 @@ function ENT:Draw()
                 dynamicLighting.size = 64
                 dynamicLighting.decay = 1000
                 dynamicLighting.dietime = CurTime() + 1
+
+                debugoverlay.Cross(pos, 4, 1, Color(255, 0, 0), true)
             end
         end
     end

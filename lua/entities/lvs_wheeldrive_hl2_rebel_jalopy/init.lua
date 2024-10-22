@@ -15,8 +15,8 @@ function ENT:OnSpawn(PObj)
     self:AddEngine(Vector(0,50,40), Angle(0,90,0))
     self:AddFuelTank(Vector(0,0,0), Angle(0,0,0), 600, LVS.FUELTYPE_PETROL)
     
-    local FrontRadius = 16
-    local RearRadius = 18
+    local FrontRadius = 18
+    local RearRadius = 20
     local FL, FR, RL, RR, ForwardAngle = self:AddWheelsUsingRig(FrontRadius, RearRadius)
 
     local FrontAxle = self:DefineAxle({
@@ -29,9 +29,9 @@ function ENT:OnSpawn(PObj)
         },
         Wheels = {FL, FR},
         Suspension = {
-            Height = 10,
+            Height = 20,
             MaxTravel = 7,
-            ControlArmLength = 25,
+            ControlArmLength = 100,
             SpringConstant = 20000,
             SpringDamping = 2000,
             SpringRelativeDamping = 2000,
@@ -48,9 +48,9 @@ function ENT:OnSpawn(PObj)
         },
         Wheels = {RL, RR},
         Suspension = {
-            Height = 10,
+            Height = 20,
             MaxTravel = 7,
-            ControlArmLength = 25,
+            ControlArmLength = 100,
             SpringConstant = 20000,
             SpringDamping = 2000,
             SpringRelativeDamping = 2000,

@@ -3,13 +3,13 @@ ENT.Base = "lvs_base_wheeldrive"
 ENT.PrintName = "Combine APC (Armed)"
 ENT.Author = "Riggs"
 ENT.Information = ""
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/combineapc_armed.png"
 
 ENT.Spawnable = true
 ENT.AdminSpawnable = false
 
-ENT.VehicleCategory = "Half-Life 2"
+ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Combine"
 
 ENT.SpawnNormalOffset = 0
@@ -77,7 +77,7 @@ function ENT:IsTurretEnabled()
         return false
     end
 
-    if not ( self:GetTurretEnabled() ) then
+    if ( !self:GetTurretEnabled() ) then
         return false
     end
 
@@ -105,23 +105,23 @@ function ENT:InitWeapons()
     local weapon = {}
     weapon.Icon = Material("lvs/weapons/bullet.png")
     weapon.Ammo = -1
-    weapon.Delay = 0.125
-    weapon.HeatRateUp = 0.2
-    weapon.HeatRateDown = 0.35
+    weapon.Delay = 0.1
+    weapon.HeatRateUp = 1
+    weapon.HeatRateDown = 0.5
     weapon.Attack = function(ent)
         local ID = ent:LookupAttachment("muzzle")
         local Muzzle = ent:GetAttachment(ID)
 
-        if not ( Muzzle ) then
-            return
-        end
+        if ( !Muzzle ) then return end
+
+        local spread = tonumber(GetConVar("lvs_car_hl2_combineapc_spread"):GetString())
 
         local bullet = {}
         bullet.Src = Muzzle.Pos
         bullet.Dir = Muzzle.Ang:Forward()
-        bullet.Spread = Vector(0.015,  0.015, 0)
+        bullet.Spread = Vector(spread, spread, spread)
         bullet.TracerName = "none"
-        bullet.Force = 50
+        bullet.Force = 1000
         bullet.HullSize = 15
         bullet.Damage = tonumber(GetConVar("lvs_car_hl2_combineapc_damage"):GetInt())
         bullet.Velocity = 30000
@@ -145,7 +145,6 @@ function ENT:InitWeapons()
             effectdata:SetAttachment(ID)
             effectdata:SetStart(Muzzle.Pos)
             effectdata:SetOrigin(tr.HitPos)
-            util.Effect("AirboatMuzzleFlash", effectdata)
             util.Effect("AirboatMuzzleFlash", effectdata)
         end
 
@@ -174,9 +173,7 @@ function ENT:InitWeapons()
         end
     end
     weapon.OnThink = function(ent, active)
-        if not ( ent:GetTurretEnabled() ) then
-            return
-        end
+        if ( !ent:GetTurretEnabled() ) then return end
 
         local AimAngles = self:WorldToLocalAngles(self:GetAimVector():Angle())
 
@@ -198,9 +195,7 @@ function ENT:InitWeapons()
         local ID = ent:LookupAttachment("muzzle")
         local Muzzle = ent:GetAttachment(ID)
 
-        if not ( Muzzle ) then
-            return
-        end
+        if ( !Muzzle ) then return end
         
         local traceTurret = util.TraceLine( {
             start = Muzzle.Pos,
@@ -226,9 +221,7 @@ function ENT:InitWeapons()
         local ID = ent:LookupAttachment("cannon_muzzle")
         local Muzzle = ent:GetAttachment(ID)
 
-        if not ( Muzzle ) then
-            return
-        end
+        if ( !Muzzle ) then return end
 
         ent:EmitSound("PropAPC.FireCannon")
 

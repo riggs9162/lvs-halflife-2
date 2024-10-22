@@ -44,7 +44,13 @@ function ENT:AnimTail()
 
 	self.sm_pp_rudder = self.sm_pp_rudder and (self.sm_pp_rudder + (TargetValue - self.sm_pp_rudder) * RealFrameTime() * 5) or 0
 
-	self:SetPoseParameter("rudder", self.sm_pp_rudder)
+	if !self.sm_pp_rudder_lerp then
+		self.sm_pp_rudder_lerp = 0
+	end
+
+	self.sm_pp_rudder_lerp = math.Approach( self.sm_pp_rudder_lerp, self.sm_pp_rudder, 0.1 * RealFrameTime() * 500 )
+
+	self:SetPoseParameter("rudder", self.sm_pp_rudder_lerp)
 	self:InvalidateBoneCache() 
 end
 

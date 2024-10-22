@@ -2,16 +2,18 @@
 ENT.Base = "lvs_base_helicopter"
 
 ENT.PrintName = "Combine Gunship"
-ENT.Author = "Luna"
+ENT.Author = "Riggs"
 ENT.Information = "Combine Synth Gunship from Half Life 2 + Episodes"
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/combinegunship.png"
+
+ENT.VehicleCategory = "Half Life 2"
+ENT.VehicleSubCategory = "Combine"
 
 ENT.Spawnable			= true
 ENT.AdminSpawnable		= false
 
-ENT.VehicleCategory = "Half-Life 2"
-ENT.VehicleSubCategory = "Combine"
+ENT.DisableBallistics = true
 
 ENT.MDL = "models/blu/combine_gunship.mdl"
 ENT.GibModels = {
@@ -146,7 +148,7 @@ function ENT:InitWeapons()
 		bullet.Dir 	= (trace.HitPos - Muzzle.Pos):GetNormalized()
 		bullet.Spread 	= Vector(0.02,0.02,0.02)
 		bullet.TracerName = "lvs_pulserifle_tracer_large"
-		bullet.Force	= 10
+		bullet.Force	= 2000
 		bullet.HullSize 	= 6
 		bullet.Damage	= 18
 		bullet.Velocity = 12000

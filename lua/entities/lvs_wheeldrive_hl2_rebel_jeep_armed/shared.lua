@@ -3,13 +3,13 @@ ENT.Base = "lvs_base_wheeldrive"
 ENT.PrintName = "Jeep (Armed)"
 ENT.Author = "Riggs"
 ENT.Information = ""
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/jeep.png"
 
 ENT.Spawnable = true
 ENT.AdminSpawnable = false
 
-ENT.VehicleCategory = "Half-Life 2"
+ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Resistance"
 
 ENT.SpawnNormalOffset = 0

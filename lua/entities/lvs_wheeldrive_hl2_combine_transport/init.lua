@@ -9,14 +9,14 @@ function ENT:OnSpawn(PObj)
     local Pod = self:AddDriverSeat(Vector(0,-30,65), Angle(0,0,0))
     Pod.ExitPos = Vector(-44.58,13.57,69.06)
 
-    // add 6 seats
-    for i = 1, 6 do
-        local pos, ang = Vector(-30, -52, 50), Angle(0, -90, 0)
+    // add 8 seats
+    for i = 1, 8 do
+        local pos, ang = Vector(-30, -80, 50), Angle(0, -90, 0)
         pos.y = pos.y - (i - 1) * 24
 
-        if (i > 3) then
+        if (i > 4) then
             pos.x = pos.x + 60
-            pos.y = pos.y + 72
+            pos.y = pos.y + 96
 
             ang.y = ang.y + 180
         end
@@ -27,8 +27,8 @@ function ENT:OnSpawn(PObj)
 
     self:AddEngine(Vector(0,87,50))
     
-    local FrontRadius = 28
-    local RearRadius = 28
+    local FrontRadius = 21
+    local RearRadius = 23
     local FL, FR, RL, RR, ForwardAngle = self:AddWheelsUsingRig(FrontRadius, RearRadius)
 
     local FrontAxle = self:DefineAxle({
@@ -41,9 +41,9 @@ function ENT:OnSpawn(PObj)
         },
         Wheels = {FL, FR},
         Suspension = {
-            Height = 10,
+            Height = 20,
             MaxTravel = 7,
-            ControlArmLength = 25,
+            ControlArmLength = 100,
             SpringConstant = 20000,
             SpringDamping = 2000,
             SpringRelativeDamping = 2000,
@@ -60,9 +60,9 @@ function ENT:OnSpawn(PObj)
         },
         Wheels = {RL, RR},
         Suspension = {
-            Height = 10,
+            Height = 20,
             MaxTravel = 7,
-            ControlArmLength = 25,
+            ControlArmLength = 100,
             SpringConstant = 20000,
             SpringDamping = 2000,
             SpringRelativeDamping = 2000,

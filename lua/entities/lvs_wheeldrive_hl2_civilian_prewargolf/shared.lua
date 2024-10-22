@@ -3,13 +3,13 @@ ENT.Base = "lvs_base_wheeldrive"
 ENT.PrintName = "Prewar Golf"
 ENT.Author = "Riggs"
 ENT.Information = ""
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/prewargolf.png"
 
 ENT.Spawnable = true
 ENT.AdminSpawnable = false
 
-ENT.VehicleCategory = "Half-Life 2"
+ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Civilian"
 
 ENT.SpawnNormalOffset = 10

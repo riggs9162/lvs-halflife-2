@@ -79,12 +79,29 @@ function ENT:AnimBody()
 	local AngVel = PhysObj:GetAngleVelocity()
 	local Steer = self:GetSteer()
 
+	self._smLocalAngles = self._smLocalAngles and self._smLocalAngles + (LocalAngles - self._smLocalAngles) * FT * 4 or LocalAngles
 	self._smVelL = self._smVelL and self._smVelL + (VelL - self._smVelL) * FT * 10 or VelL
+	self._smAngVel = self._smAngVel and self._smAngVel + (AngVel - self._smAngVel) * FT * 10 or AngVel
 	self._smSteer = self._smSteer and self._smSteer + (Steer - self._smSteer) *  FT * 0.2 or Steer
 
-	local accel = self._smVelL.x * 0.0015 + self._smSteer.y * 2 + self._smVelL.z * 0.008
-	local sway = -self._smVelL.y * 0.002 - self._smSteer.x * 5
+	Body:SetPoseParameter("flex_vert", self._smSteer.y * 10 + self._smLocalAngles.p * 0.5 )
+	Body:SetPoseParameter("flex_horz", self._smAngVel.z * 0.25 - self._smSteer.x * 10 + self._smLocalAngles.y * 0.5 )
+	Body:SetPoseParameter("fin_accel", self._smVelL.x * 0.0015 + self._smSteer.y * 2 + self._smVelL.z * 0.008 )
+	Body:SetPoseParameter("fin_sway", -self._smVelL.y * 0.007 - self._smSteer.x * 5 )
 
-	Body:SetPoseParameter("cargo_body_accel", self:GetDeploying() and 0 or accel)
-	Body:SetPoseParameter("cargo_body_sway", sway)
+	if !self.cargo_body_accel then
+		self.cargo_body_accel = 0
+	end
+
+	if self:GetDeploying() then
+		self.cargo_body_accel = math.Approach( self.cargo_body_accel, -1, FT )
+	else
+		self.cargo_body_accel = math.Approach( self.cargo_body_accel, self._smVelL.x * 0.0015, FT )
+	end
+
+	Body:SetPoseParameter("cargo_body_accel", self.cargo_body_accel)
+	Body:SetPoseParameter("cargo_body_sway", -self._smVelL.y * 0.0025 )
+
+	--Body:SetPoseParameter("cargo_body_accel", self:GetDeploying() and 0 or accel)
+	--Body:SetPoseParameter("cargo_body_sway", sway)
 end

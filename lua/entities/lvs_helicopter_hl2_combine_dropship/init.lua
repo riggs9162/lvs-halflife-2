@@ -7,7 +7,7 @@ include("sv_wheels.lua")
 function ENT:SetPassenger( ply )
 	if not IsValid( ply ) then return end
 
-	if ( ply:GetMoveType() != MOVETYPE_NOCLIP and not self:GetDeploying() and not ply:InVehicle() ) then
+	if ( ply:GetMoveType() != MOVETYPE_NOCLIP and not self:GetDoor() and not ply:InVehicle() ) then
 		self:EmitSound( "doors/default_locked.wav" )
 		return
 	end

@@ -2,16 +2,18 @@
 ENT.Base = "lvs_base_helicopter"
 
 ENT.PrintName = "Combine Dropship (Bypassable)"
-ENT.Author = "Luna"
+ENT.Author = "Riggs"
 ENT.Information = "Combine Synth Dropship from Half Life 2 + Episodes, the bypassable allows you to enter without noclipping or opening the door as the pilot."
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/combinedropship_bypass.png"
+
+ENT.VehicleCategory = "Half Life 2"
+ENT.VehicleSubCategory = "Combine"
 
 ENT.Spawnable			= true
 ENT.AdminSpawnable		= false
 
-ENT.VehicleCategory = "Half-Life 2"
-ENT.VehicleSubCategory = "Combine"
+ENT.DisableBallistics = true
 
 ENT.MDL = "models/combine_dropship_container.mdl"
 ENT.GibModels = {
@@ -80,6 +82,7 @@ function ENT:OnSetupDataTables()
 	self:AddDT( "Entity", "Body" )
 	self:AddDT( "Bool", "LightsEnabled" )
 	self:AddDT( "Bool", "Deploying" )
+	self:AddDT( "Bool", "Door" )
 end
 
 function ENT:GetAimAngles()
@@ -230,6 +233,23 @@ function ENT:InitWeapons()
 		if ( ent.deploySound and not ent.deploySound:IsPlaying() ) then
 			ent.deploySound:PlayEx(0, 100)
 		end
+
+		// Check if we are near the ground, if so open the door, if not close it
+		local trace = util.TraceLine({
+			start = ent:GetPos(),
+			endpos = ent:GetPos() - Vector(0, 0, 100),
+			filter = ent
+		})
+
+		if ( trace.Hit and not ent:GetDoor() and ent:GetDeploying() ) then
+			ent:ResetSequence(ent:LookupSequence("open"))
+			ent:EmitSound( "doors/door_metal_thin_move1.wav", 75, 90 )
+			ent:SetDoor( true )
+		elseif ( !trace.Hit and ent:GetDoor() ) or ( !ent:GetDeploying() and ent:GetDoor() ) then
+			ent:ResetSequence(ent:LookupSequence("close"))
+			ent:EmitSound( "doors/door_metal_thin_move1.wav", 75, 100 )
+			ent:SetDoor( false )
+		end
 	end
 	weapon.StartAttack = function( ent )
 		if not ent.SetDeploying then return end
@@ -237,16 +257,11 @@ function ENT:InitWeapons()
 		if ent:GetAI() then return end
 
 		ent:SetDeploying( not ent:GetDeploying() )
-		ent:EmitSound( "doors/door_metal_thin_move1.wav", 75, !ent:GetDeploying() and 100 or 90 )
 
 		if ( ent.deploySound ) then
 			if ( ent:GetDeploying() ) then
-				ent:ResetSequence(ent:LookupSequence("open"))
-				ent:GetBody():PlayAnimation("cargo_hover")
 				ent.deploySound:ChangeVolume(1, 1)
 			else
-				ent:ResetSequence(ent:LookupSequence("close"))
-				ent:GetBody():PlayAnimation("cargo_idle")
 				ent.deploySound:ChangeVolume(0, 3)
 			end
 		end

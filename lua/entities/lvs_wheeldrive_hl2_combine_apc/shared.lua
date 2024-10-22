@@ -3,13 +3,13 @@ ENT.Base = "lvs_base_wheeldrive"
 ENT.PrintName = "Combine APC"
 ENT.Author = "Riggs"
 ENT.Information = ""
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/combineapc.png"
 
 ENT.Spawnable = true
 ENT.AdminSpawnable = false
 
-ENT.VehicleCategory = "Half-Life 2"
+ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Combine"
 
 ENT.SpawnNormalOffset = 0

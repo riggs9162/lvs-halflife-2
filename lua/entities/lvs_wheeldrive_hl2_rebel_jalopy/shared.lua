@@ -3,13 +3,13 @@ ENT.Base = "lvs_base_wheeldrive"
 ENT.PrintName = "Jalopy"
 ENT.Author = "Riggs"
 ENT.Information = ""
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/jalopy.png"
 
 ENT.Spawnable = IsMounted("ep2")
 ENT.AdminSpawnable = false
 
-ENT.VehicleCategory = "Half-Life 2"
+ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Resistance"
 
 ENT.SpawnNormalOffset = 0

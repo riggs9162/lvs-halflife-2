@@ -1,17 +1,19 @@
 
 ENT.Base = "lvs_base_helicopter"
 
-ENT.PrintName = "Combine Helicopter"
-ENT.Author = "Luna"
+ENT.PrintName = "Combine Hunter-Chopper"
+ENT.Author = "Riggs"
 ENT.Information = "Combine Attack Helicopter from Half Life 2 + Episodes"
-ENT.Category = "[LVS] - Half-Life 2"
-ENT.IconOverride = "materials/entities/combinehelicopter.png"
+ENT.Category = "[LVS] - Half Life 2"
+ENT.IconOverride = "materials/entities/combinehunter.png"
+
+ENT.VehicleCategory = "Half Life 2"
+ENT.VehicleSubCategory = "Combine"
 
 ENT.Spawnable			= true
 ENT.AdminSpawnable		= false
 
-ENT.VehicleCategory = "Half-Life 2"
-ENT.VehicleSubCategory = "Combine"
+ENT.DisableBallistics = true
 
 ENT.MDL = "models/Combine_Helicopter.mdl"
 ENT.GibModels = {
@@ -27,18 +29,18 @@ ENT.AITEAM = 1
 
 ENT.MaxHealth = 1600
 
-ENT.MaxVelocity = 2150
+ENT.MaxVelocity = 1800
 
 ENT.ThrustUp = 1
-ENT.ThrustDown = 0.8
+ENT.ThrustDown = 0.5
 ENT.ThrustRate = 1
 
 ENT.ThrottleRateUp = 0.2
 ENT.ThrottleRateDown = 0.2
 
-ENT.TurnRatePitch = 1
-ENT.TurnRateYaw = 1
-ENT.TurnRateRoll = 1
+ENT.TurnRatePitch = 0.7
+ENT.TurnRateYaw = 0.7
+ENT.TurnRateRoll = 0.5
 
 ENT.ForceLinearDampingMultiplier = 1.5
 
@@ -182,7 +184,7 @@ function ENT:ShootGun()
 	bullet.Dir 	= (trace.HitPos - Muzzle.Pos):GetNormalized()
 	bullet.Spread 	= Vector(0.06,0.06,0.06)
 	bullet.TracerName = "lvs_pulserifle_tracer"
-	bullet.Force	= 10
+	bullet.Force	= 1000
 	bullet.HullSize 	= 6
 	bullet.Damage	= 6
 	bullet.Velocity = 15000
@@ -281,7 +283,7 @@ function ENT:InitWeapons()
 	weapon.StartAttack = function( ent )
 		local Driver = ent:GetDriver()
 
-		local projectile = ents.Create( "lvs_helicopter_combine_bomb" )
+		local projectile = ents.Create( "lvs_helicopter_hl2_combine_hunter_bomb" )
 		projectile:SetPos( ent:LocalToWorld( Vector(-50,0,-25) ) )
 		projectile:SetAngles( ent:GetAngles() )
 		projectile:SetParent( ent )

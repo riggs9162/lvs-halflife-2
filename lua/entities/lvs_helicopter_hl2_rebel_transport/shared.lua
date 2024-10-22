@@ -4,13 +4,13 @@ ENT.Base = "lvs_base_helicopter"
 ENT.PrintName = "Rebel Transport Helicopter"
 ENT.Author = "Luna"
 ENT.Information = "Transport Helicopter as seen in Half Life 2 Episode 2"
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/rebeltransport.png"
 
 ENT.Spawnable			= true
 ENT.AdminSpawnable		= false
 
-ENT.VehicleCategory = "Half-Life 2"
+ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Resistance"
 
 ENT.MDL = "models/blu/helicopter.mdl"

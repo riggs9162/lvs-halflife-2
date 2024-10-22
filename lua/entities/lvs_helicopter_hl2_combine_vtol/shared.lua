@@ -3,14 +3,16 @@ ENT.Base = "lvs_base_helicopter"
 ENT.PrintName = "Combine VTOL"
 ENT.Author = "Luna"
 ENT.Information = "Combine VTOL, used to transport troops and supplies."
-ENT.Category = "[LVS] - Half-Life 2"
+ENT.Category = "[LVS] - Half Life 2"
 ENT.IconOverride = "materials/entities/combinevtol.png"
+
+ENT.VehicleCategory = "Half Life 2"
+ENT.VehicleSubCategory = "Combine"
 
 ENT.Spawnable			= util.IsValidModel("models/ludex/mirrors_edge_catalyst/vtol_attack_ragdoll.mdl")
 ENT.AdminSpawnable		= false
 
-ENT.VehicleCategory = "Half-Life 2"
-ENT.VehicleSubCategory = "Combine"
+ENT.DisableBallistics = true
 
 ENT.MDL = "models/ludex/mirrors_edge_catalyst/vtol_attack_ragdoll.mdl"
 ENT.GibModels = {

@@ -3,13 +3,13 @@ ENT.Base = "lvs_base_wheeldrive"
 ENT.PrintName = "Combine Transporter (HL:A)"
 ENT.Author = "Riggs"
 ENT.Information = ""
-ENT.Category = "[LVS] - Half-Life 2"
-ENT.IconOverride = "materials/entities/combinetransport.png"
+ENT.Category = "[LVS] - Half Life 2"
+ENT.IconOverride = "materials/entities/combinetransport_hla.png"
 
 ENT.Spawnable = true
 ENT.AdminSpawnable = false
 
-ENT.VehicleCategory = "Half-Life 2"
+ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Combine"
 
 ENT.SpawnNormalOffset = 0

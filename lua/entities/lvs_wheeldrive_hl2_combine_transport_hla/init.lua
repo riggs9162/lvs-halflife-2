@@ -32,8 +32,8 @@ function ENT:OnSpawn(PObj)
 
     self:AddEngine(Vector(0,125,54))
     
-    local FrontRadius = 26
-    local RearRadius = 26
+    local FrontRadius = 24
+    local RearRadius = 24
     local FL, FR, RL, RR, ForwardAngle = self:AddWheelsUsingRig(FrontRadius, RearRadius)
 
     local FrontAxle = self:DefineAxle({
@@ -46,9 +46,9 @@ function ENT:OnSpawn(PObj)
         },
         Wheels = {FL, FR},
         Suspension = {
-            Height = 10,
+            Height = 20,
             MaxTravel = 7,
-            ControlArmLength = 25,
+            ControlArmLength = 100,
             SpringConstant = 200000,
             SpringDamping = 2000,
             SpringRelativeDamping = 2000,
@@ -65,9 +65,9 @@ function ENT:OnSpawn(PObj)
         },
         Wheels = {RL, RR},
         Suspension = {
-            Height = 10,
+            Height = 20,
             MaxTravel = 7,
-            ControlArmLength = 25,
+            ControlArmLength = 100,
             SpringConstant = 200000,
             SpringDamping = 2000,
             SpringRelativeDamping = 2000,
