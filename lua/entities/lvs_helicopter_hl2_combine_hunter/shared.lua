@@ -226,60 +226,13 @@ function ENT:InitWeapons()
 	weapon.OnSelect = function( ent ) ent:EmitSound("physics/metal/weapon_impact_soft3.wav") end
 	self:AddWeapon( weapon )
 
-
-	local weapon = {}
-	weapon.Icon = Material("lvs/weapons/missile.png")
-	weapon.Ammo = 60
-	weapon.Delay = 0.25
-	weapon.HeatRateUp = 0.25
-	weapon.HeatRateDown = 0.25
-	weapon.Attack = function( ent )
-
-		ent.FireLeft = not ent.FireLeft
-
-		local Driver = ent:GetDriver()
-		local Target = ent:GetEyeTrace().HitPos
-
-		local projectile = ents.Create( "lvs_missile" )
-		projectile:SetPos( ent:LocalToWorld( Vector(17.36,50.89 * (self.FireLeft and 1 or -1),-59.39) ) )
-		projectile:SetAngles( ent:GetAngles() )
-		projectile:SetParent( ent )
-		projectile:Spawn()
-		projectile:Activate()
-		projectile.GetTarget = function( missile ) return missile end
-		projectile.GetTargetPos = function( missile )
-			if missile.HasReachedTarget then
-				return missile:LocalToWorld( Vector(100,0,0) )
-			end
-
-			if (missile:GetPos() - Target):Length() < 100 then
-				missile.HasReachedTarget = true
-			end
-			return Target
-		end
-		projectile:SetAttacker( IsValid( Driver ) and Driver or self )
-		projectile:SetEntityFilter( ent:GetCrosshairFilterEnts() )
-		projectile:SetSpeed( ent:GetVelocity():Length() + 4000 )
-		projectile:SetDamage( 400 )
-		projectile:SetRadius( 150 )
-		projectile:Enable()
-		projectile:EmitSound("npc/waste_scanner/grenade_fire.wav")
-
-		ent:TakeAmmo()
-	end
-	weapon.OnSelect = function( ent )
-		ent:EmitSound("weapons/shotgun/shotgun_cock.wav")
-	end
-	self:AddWeapon( weapon )
-
-
 	local weapon = {}
 	weapon.Icon = Material("lvs/weapons/bomb.png")
 	weapon.UseableByAI = false
 	weapon.Ammo = 128
-	weapon.Delay = 0.25
-	weapon.HeatRateUp = -0.4
-	weapon.HeatRateDown = 0.4
+	weapon.Delay = 1
+	weapon.HeatRateUp = 1
+	weapon.HeatRateDown = 0.5
 	weapon.StartAttack = function( ent )
 		local Driver = ent:GetDriver()
 
