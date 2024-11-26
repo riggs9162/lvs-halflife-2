@@ -191,7 +191,7 @@ function ENT:InitWeapons()
     weapon.OnOverheat = function(ent)
         ent:EmitSound("lvs/overheat.wav")
     end
-	weapon.HudPaint = function( ent, X, Y, ply )
+    weapon.HudPaint = function( ent, X, Y, ply )
         local ID = ent:LookupAttachment("muzzle")
         local Muzzle = ent:GetAttachment(ID)
 
@@ -207,7 +207,7 @@ function ENT:InitWeapons()
 
         ent:PaintCrosshairCenter( MuzzlePos2D, Col )
         ent:LVSPaintHitMarker( MuzzlePos2D )
-	end
+    end
 
     self:AddWeapon(weapon)
     
@@ -268,7 +268,7 @@ function ENT:InitWeapons()
 
         ent:TakeAmmo(1)
     end
-	weapon.HudPaint = function( ent, X, Y, ply )
+    weapon.HudPaint = function( ent, X, Y, ply )
         local traceTurret = util.TraceLine( {
             start = EyePos(),
             endpos = EyePos() + EyeAngles():Forward() * 10000,
@@ -279,7 +279,16 @@ function ENT:InitWeapons()
 
         ent:PaintCrosshairOuter( MuzzlePos2D, Col )
         ent:LVSPaintHitMarker( MuzzlePos2D )
-	end
+    end
+
+    self:AddWeapon(weapon)
+
+    local weapon = {}
+    weapon.Icon = Material("lvs/weapons/tank_noturret.png")
+    weapon.Ammo = -1
+    weapon.Delay = 0
+    weapon.HeatRateUp = 0
+    weapon.HeatRateDown = 0
 
     self:AddWeapon(weapon)
 end

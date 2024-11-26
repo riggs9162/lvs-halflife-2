@@ -282,4 +282,13 @@ function ENT:InitWeapons()
 		ent:EmitSound( "items/flashlight1.wav", 75, 105 )
 	end
 	self:AddWeapon( weapon )
+
+	local weapon = {}
+	weapon.Icon = Material("lvs/weapons/tank_noturret.png")
+	weapon.Ammo = -1
+	weapon.Delay = 0
+	weapon.HeatRateUp = 0
+	weapon.HeatRateDown = 0
+
+	self:AddWeapon(weapon)
 end

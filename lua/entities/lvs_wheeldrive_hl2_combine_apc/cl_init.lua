@@ -4,7 +4,8 @@ function ENT:UpdatePoseParameters(steer, speed_kmh, engine_rpm, throttle, brake,
     self:SetPoseParameter("vehicle_steer", steer)
 
     if ( throttle > 0.25 ) then
-        if not ( self.bMoving ) then
+        if ( !self.bMoving ) then
+            self:StopSound("vehicles/apc/apc_slowdown_fast_loop5.wav")
             self:EmitSound("vehicles/apc/apc_firstgear_loop1.wav", 75, 100, LVS.EngineVolume)
 
             self.bMoving = true
@@ -76,7 +77,7 @@ function ENT:Draw()
     local ply = LocalPlayer()
     local vehicle = ply:GetVehicle()
     local lvsVehicle = ply:lvsGetVehicle()
-    if not ( IsValid(vehicle) and IsValid(lvsVehicle) ) then
+    if ( !IsValid(vehicle) or !IsValid(lvsVehicle) ) then
         self:DrawModel()
         return
     end
@@ -112,10 +113,10 @@ function ENT:Draw()
 end
 
 function ENT:OnRemoved()
-    self:StopSound("vehicles/apc/apc_start_loop3.wav")
-    self:StopSound("vehicles/apc/apc_shutdown.wav")
     self:StopSound("vehicles/apc/apc_firstgear_loop1.wav")
+    self:StopSound("vehicles/apc/apc_shutdown.wav")
     self:StopSound("vehicles/apc/apc_slowdown_fast_loop5.wav")
+    self:StopSound("vehicles/apc/apc_start_loop3.wav")
 
     if ( self.LightProp ) then
         self.LightProp:Remove()
