@@ -255,7 +255,7 @@ function ENT:InitWeapons()
 	self:AddWeapon(weapon)
 
 	local weapon = {}
-	weapon.Icon = Material("lvs/weapons/horn.png")
+	weapon.Icon = Material("lvs/weapons/light.png")
 	weapon.Ammo = -1
 	weapon.Delay = 0
 	weapon.HeatRateUp = 0
