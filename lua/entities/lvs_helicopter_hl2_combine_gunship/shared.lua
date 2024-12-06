@@ -252,4 +252,30 @@ function ENT:InitWeapons()
 	weapon.HeatRateDown = 0
 
 	self:AddWeapon(weapon)
+
+	local weapon = {}
+	weapon.Icon = Material("lvs/weapons/horn.png")
+	weapon.Ammo = -1
+	weapon.Delay = 0
+	weapon.HeatRateUp = 0
+	weapon.HeatRateDown = 0
+
+	weapon.StartAttack = function( ent )
+		if ( !IsValid(self._spotlight) ) then return end
+		if ent:GetAI() then return end
+
+		ent:EmitSound( "items/flashlight1.wav", 75, 105 )
+
+		if ( ent._bSpotlightOn ) then
+			ent._spotlight:Fire( "LightOff", "", 0 )
+			ent._spotlightSprite:Fire("HideSprite", "", 0)
+		else
+			ent._spotlight:Fire( "LightOn", "", 0 )
+			ent._spotlightSprite:Fire("ShowSprite", "", 0)
+		end
+
+		ent._bSpotlightOn = !ent._bSpotlightOn
+	end
+
+	self:AddWeapon(weapon)
 end
