@@ -1,11 +1,31 @@
 include("shared.lua")
 
+function ENT:Initialize()
+end
+
 function ENT:PreDraw()
 	local Body = self:GetBody()
 
 	if not IsValid( Body ) then return false end
 
 	Body:DrawModel()
+
+	if ( !self.projTexture ) then
+		local ID = Body:LookupAttachment( "muzzle" )
+		local Muzzle = Body:GetAttachment( ID )
+
+		self.projTexture = ProjectedTexture()
+		self.projTexture:SetPos( Muzzle.Pos )
+		self.projTexture:SetAngles( Muzzle.Ang )
+		self.projTexture:SetTexture( "effects/flashlight001" )
+		self.projTexture:SetFarZ( 6000 )
+		self.projTexture:SetNearZ( 10 )
+		self.projTexture:SetFOV( 30 )
+		self.projTexture:SetColor( color_black )
+		self.projTexture:SetBrightness( 10 )
+		self.projTexture:SetEnableShadows( true )
+		self.projTexture:Update()
+	end
 
 	return false
 end
@@ -34,9 +54,37 @@ function ENT:DamageFX()
 	end
 end
 
+local color_cyan = Color(0, 255, 255)
 function ENT:OnFrame()
 	self:AnimRotor()
 	self:DamageFX()
+
+	local Body = self:GetBody()
+	if ( !IsValid( Body ) ) then return end
+
+	if self.projTexture then
+		local ID = Body:LookupAttachment( "muzzle" )
+		local Muzzle = Body:GetAttachment( ID )
+
+		if Muzzle then
+			self.projTexture:SetPos( Muzzle.Pos )
+			self.projTexture:SetAngles( Muzzle.Ang )
+
+			if ( self:GetSpotlightEnabled() ) then
+				self.projTexture:SetColor( color_cyan )
+			else
+				self.projTexture:SetColor( color_black )
+			end
+
+			self.projTexture:Update()
+		end
+	end
+end
+
+function ENT:OnRemove()
+	if ( self.projTexture ) then
+		self.projTexture:Remove()
+	end
 end
 
 function ENT:AnimRotor()
@@ -45,7 +93,7 @@ function ENT:AnimRotor()
 	self.RPM = self.RPM and (self.RPM + RPM * RealFrameTime() * 0.5) or 0
 
 	local Rot = Angle( -self.RPM,0,0)
-	Rot:Normalize() 
+	Rot:Normalize()
 
 	local Body = self:GetBody()
 
