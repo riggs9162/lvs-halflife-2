@@ -33,31 +33,37 @@ function ENT:OnSpawn( PObj )
 	self.weaponSND:SetParent( Body, ID )
 
 	local spotlight = ents.Create( "point_spotlight" )
-	spotlight:SetPos(Muzzle.Pos)
-	spotlight:SetAngles(Muzzle.Ang)
-	spotlight:SetParent( Body, ID )
-	spotlight:SetKeyValue("spotlightlength", "2000")
-	spotlight:SetKeyValue("spotlightwidth", "200")
-	spotlight:AddSpawnFlags(1)
-	spotlight:SetColor(color_cyan)
-	spotlight:Spawn()
-	spotlight:Activate()
-	spotlight:Fire("LightOff", "", 0)
+	if ( IsValid(spotlight) ) then
+		spotlight:SetPos(Muzzle.Pos)
+		spotlight:SetAngles(Muzzle.Ang)
+		spotlight:SetParent( Body, ID )
+		spotlight:SetKeyValue("spotlightlength", "1500")
+		spotlight:SetKeyValue("spotlightwidth", "150")
+		spotlight:AddSpawnFlags(1)
+		spotlight:SetColor(color_cyan)
+		spotlight:Spawn()
+		spotlight:Activate()
+		spotlight:Fire("LightOff", "", 0)
+
+		self._spotlight = spotlight
+	end
 
 	local sprite = ents.Create( "env_sprite" )
-	sprite:SetPos( Muzzle.Pos )
-	sprite:SetParent( Body, ID )
-	sprite:SetKeyValue( "rendermode", 9 )
-	sprite:SetKeyValue( "model", "sprites/light_ignorez.vmt" )
-	sprite:SetKeyValue( "scale", 1.5 )
-	sprite:SetColor(color_cyan)
-	sprite:AddSpawnFlags(1)
-	sprite:Spawn()
-	sprite:Activate()
-	sprite:Fire("HideSprite", "", 0)
+	if ( IsValid(sprite) ) then
+		sprite:SetPos( Muzzle.Pos )
+		sprite:SetParent( Body, ID )
+		sprite:SetKeyValue( "rendermode", 9 )
+		sprite:SetKeyValue( "model", "sprites/light_ignorez.vmt" )
+		sprite:SetKeyValue( "scale", 1.5 )
+		sprite:SetColor(color_cyan)
+		sprite:AddSpawnFlags(1)
+		sprite:Spawn()
+		sprite:Activate()
+		sprite:Fire("HideSprite", "", 0)
 
-	self._spotlight = spotlight
-	self._spotlightSprite = sprite
+		self._spotlightSprite = sprite
+	end
+
 	self._bSpotlightOn = false
 
 	self:DeleteOnRemove( spotlight )
