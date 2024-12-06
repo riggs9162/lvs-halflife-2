@@ -267,11 +267,21 @@ function ENT:InitWeapons()
 		ent:EmitSound( "items/flashlight1.wav", 75, 105 )
 
 		if ( ent._bSpotlightOn ) then
-			ent._spotlight:Fire( "LightOff", "", 0 )
-			ent._spotlightSprite:Fire("HideSprite", "", 0)
+			if ( IsValid(ent._spotlightSprite) ) then
+				ent._spotlightSprite:Fire("HideSprite", "", 0)
+			end
+
+			if ( IsValid(ent._spotlight) ) then
+				ent._spotlight:Fire( "LightOff", "", 0 )
+			end
 		else
-			ent._spotlight:Fire( "LightOn", "", 0 )
-			ent._spotlightSprite:Fire("ShowSprite", "", 0)
+			if ( IsValid(ent._spotlightSprite) ) then
+				ent._spotlightSprite:Fire("ShowSprite", "", 0)
+			end
+
+			if ( IsValid(ent._spotlight) ) then
+				ent._spotlight:Fire( "LightOn", "", 0 )
+			end
 		end
 
 		ent._bSpotlightOn = !ent._bSpotlightOn
