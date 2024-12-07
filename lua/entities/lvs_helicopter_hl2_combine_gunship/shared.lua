@@ -79,6 +79,7 @@ ENT.EngineSounds = {
 
 function ENT:OnSetupDataTables()
 	self:AddDT( "Entity", "Body" )
+	self:AddDT( "Bool", "SpotlightEnabled" )
 end
 
 function ENT:GetAimAngles()
@@ -250,6 +251,41 @@ function ENT:InitWeapons()
 	weapon.Delay = 0
 	weapon.HeatRateUp = 0
 	weapon.HeatRateDown = 0
+
+	self:AddWeapon(weapon)
+
+	local weapon = {}
+	weapon.Icon = Material("lvs/weapons/light.png")
+	weapon.Ammo = -1
+	weapon.Delay = 0
+	weapon.HeatRateUp = 0
+	weapon.HeatRateDown = 0
+
+	weapon.StartAttack = function( ent )
+		if ent:GetAI() then return end
+
+		ent:EmitSound( "items/flashlight1.wav", 75, 105 )
+
+		if ( ent:GetSpotlightEnabled() ) then
+			if ( IsValid(ent._spotlight) ) then
+				ent._spotlight:Fire("LightOff", "", 0)
+			end
+
+			if ( IsValid(ent._spotlightSprite) ) then
+				ent._spotlightSprite:Fire("HideSprite", "", 0)
+			end
+		else
+			if ( IsValid(ent._spotlight) ) then
+				ent._spotlight:Fire("LightOn", "", 0)
+			end
+
+			if ( IsValid(ent._spotlightSprite) ) then
+				ent._spotlightSprite:Fire("ShowSprite", "", 0)
+			end
+		end
+
+		ent:SetSpotlightEnabled(!ent:GetSpotlightEnabled())
+	end
 
 	self:AddWeapon(weapon)
 end

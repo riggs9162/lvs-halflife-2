@@ -2,6 +2,7 @@ AddCSLuaFile( "shared.lua" )
 AddCSLuaFile( "cl_init.lua" )
 include("shared.lua")
 
+local color_cyan = Color(0, 255, 255)
 function ENT:OnSpawn( PObj )
 	local DriverSeat = self:AddDriverSeat( Vector(200,0,0), Angle(0,-90,0) )
 	DriverSeat:SetCameraDistance( 0.2 )
@@ -30,6 +31,36 @@ function ENT:OnSpawn( PObj )
 	self.weaponSND = self:AddSoundEmitter( Body:WorldToLocal( Muzzle.Pos ), "npc/combine_gunship/gunship_weapon_fire_loop6.wav", "npc/combine_gunship/gunship_fire_loop1.wav" )
 	self.weaponSND:SetSoundLevel( 110 )
 	self.weaponSND:SetParent( Body, ID )
+
+	self._spotlight = ents.Create( "point_spotlight" )
+	if ( IsValid(self._spotlight) ) then
+		self._spotlight:SetPos(Muzzle.Pos)
+		self._spotlight:SetAngles(Muzzle.Ang)
+		self._spotlight:SetParent( Body, ID )
+		self._spotlight:SetKeyValue("spotlightlength", "1500")
+		self._spotlight:SetKeyValue("spotlightwidth", "150")
+		self._spotlight:AddSpawnFlags(2)
+		self._spotlight:SetColor(color_cyan)
+		self._spotlight:Spawn()
+		self._spotlight:Activate()
+		self._spotlight:Fire("LightOff", "", 0)
+	end
+
+	local sprite = ents.Create( "env_sprite" )
+	if ( IsValid(sprite) ) then
+		sprite:SetPos( Muzzle.Pos )
+		sprite:SetParent( Body, ID )
+		sprite:RemoveSpawnFlags(1)
+		sprite:SetKeyValue( "rendermode", 9 )
+		sprite:SetKeyValue( "model", "sprites/light_ignorez.vmt" )
+		sprite:SetKeyValue( "scale", 1.5 )
+		sprite:SetColor(color_cyan)
+		sprite:Spawn()
+		sprite:Activate()
+		sprite:Fire("HideSprite", "", 0)
+
+		self._spotlightSprite = sprite
+	end
 end
 
 function ENT:SetRotor( PhysRot )
