@@ -74,11 +74,51 @@ end
 ENT.LightMaterial = Material( "effects/lvs/heli_spotlight" )
 ENT.GlowMaterial = Material( "sprites/light_glow02_add" )
 
+local LightRedFlashNext = 0
+local LightRedFlastInerta = 0
 function ENT:PreDrawTranslucent()
 	if not self:GetLightsEnabled() then 
 		self:RemoveLight()
 
 		return true
+	end
+
+	if LightRedFlashNext < CurTime() and math.Round( CurTime() * 2 ) % 2 == 0 then
+		local pos = self:GetPos() - self:GetUp() * 48
+		local ang = self:GetAngles()
+		local pos01 = pos + ang:Right() * 96
+		local pos02 = pos - ang:Right() * 96
+		local pos03 = pos - ang:Forward() * 256 + ang:Up() * 64
+		EmitSound( "buttons/lightswitch2.wav", pos01, 0, CHAN_AUTO, 1, 50, 0, 100 )
+		EmitSound( "buttons/lightswitch2.wav", pos02, 0, CHAN_AUTO, 1, 50, 0, 100 )
+		EmitSound( "buttons/lightswitch2.wav", pos03, 0, CHAN_AUTO, 1, 50, 0, 100 )
+		LightRedFlashNext = CurTime() + 0.15
+		LightRedFlastInerta = Lerp( 0.2, LightRedFlastInerta, 8 )
+	else
+		LightRedFlastInerta = Lerp( 0.1, LightRedFlastInerta, 0 )
+	end
+
+	for i = 0, 2 do
+		local Light_Red = self:GetAttachment( self:LookupAttachment( "Light_Red" .. i ) )
+		if not Light_Red then continue end
+
+		local size = 64 + math.sin( CurTime() * 10 ) * 4
+		size = size * LightRedFlastInerta
+
+		render.SetMaterial( self.GlowMaterial )
+		render.DrawSprite( Light_Red.Pos, size, size, Color( 255, 0, 0, 255) )
+
+		local Light_Red_Dynamic = DynamicLight( self:EntIndex() + i )
+		if Light_Red_Dynamic then
+			Light_Red_Dynamic.pos = Light_Red.Pos
+			Light_Red_Dynamic.r = 255 * LightRedFlastInerta
+			Light_Red_Dynamic.g = 0
+			Light_Red_Dynamic.b = 0
+			Light_Red_Dynamic.brightness = 1 * LightRedFlastInerta
+			Light_Red_Dynamic.Decay = 1000
+			Light_Red_Dynamic.Size = 256
+			Light_Red_Dynamic.DieTime = CurTime() + 1
+		end
 	end
 
 	local SpotLight = self:GetAttachment( self:LookupAttachment( "SpotLight" ) )
@@ -87,12 +127,12 @@ function ENT:PreDrawTranslucent()
 
 	if not IsValid( self.projector ) then
 		local thelamp = ProjectedTexture()
-		thelamp:SetBrightness( 5 ) 
+		thelamp:SetBrightness( 6 ) 
 		thelamp:SetTexture( "effects/flashlight/soft" )
 		thelamp:SetColor( Color(255,255,255) ) 
 		thelamp:SetEnableShadows( true ) 
-		thelamp:SetFarZ( 2500 ) 
-		thelamp:SetNearZ( 75 ) 
+		thelamp:SetFarZ( 4096 ) 
+		thelamp:SetNearZ( 96 ) 
 		thelamp:SetFOV( 60 )
 		self.projector = thelamp
 	end
@@ -100,10 +140,10 @@ function ENT:PreDrawTranslucent()
 	local Dir = SpotLight.Ang:Forward()
 
 	render.SetMaterial( self.GlowMaterial )
-	render.DrawSprite( SpotLight.Pos + Dir * 5, 32, 32, Color( 255, 255, 255, 255) )
+	render.DrawSprite( SpotLight.Pos + Dir * 5, 64, 64, Color( 255, 255, 255, 255) )
 
 	render.SetMaterial( self.LightMaterial )
-	render.DrawBeam( SpotLight.Pos, SpotLight.Pos + Dir * 100, 32, 0, 0.99, Color( 100, 100, 100, 255) ) 
+	render.DrawBeam( SpotLight.Pos, SpotLight.Pos + Dir * 256, 64, 0, 0.99, Color( 100, 100, 100, 200) ) 
 
 	if IsValid( self.projector ) then
 		self.projector:SetPos( SpotLight.Pos )

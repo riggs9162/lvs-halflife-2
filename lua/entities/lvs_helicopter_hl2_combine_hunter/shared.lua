@@ -230,9 +230,9 @@ function ENT:InitWeapons()
 	weapon.Icon = Material("lvs/weapons/bomb.png")
 	weapon.UseableByAI = false
 	weapon.Ammo = 128
-	weapon.Delay = 1
-	weapon.HeatRateUp = 1
-	weapon.HeatRateDown = 0.5
+	weapon.Delay = 0.25
+	weapon.HeatRateUp = -0.4
+	weapon.HeatRateDown = 0.4
 	weapon.StartAttack = function( ent )
 		local Driver = ent:GetDriver()
 
