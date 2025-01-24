@@ -69,9 +69,9 @@ function ENT:OnSpawn(PObj)
         },
     })
 
-    self:ManipulateBoneScale(self:LookupBone("APC.Gun_Base"), Vector(0, 0, 0))
-    self:ManipulateBoneScale(self:LookupBone("APC.arm_root"), Vector(0, 0, 0))
-    self:ManipulateBoneScale(self:LookupBone("APC.arm_middle"), Vector(0, 0, 0))
+    self:ManipulateBoneScale(self:LookupBone("APC.Gun_Base"), vector_origin)
+    self:ManipulateBoneScale(self:LookupBone("APC.arm_root"), vector_origin)
+    self:ManipulateBoneScale(self:LookupBone("APC.arm_middle"), vector_origin)
 
     local var = GetConVar("lvs_car_hl2_combineapc_health") and GetConVar("lvs_car_hl2_combineapc_health"):GetInt() or 1600
     self.MaxHealth = var
