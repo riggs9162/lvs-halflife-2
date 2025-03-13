@@ -26,7 +26,7 @@ function ENT:OnSpawn(PObj)
     end
 
     self:AddEngine(Vector(0,87,50))
-
+    
     local FrontRadius = 28
     local RearRadius = 28
     local FL, FR, RL, RR, ForwardAngle = self:AddWheelsUsingRig(FrontRadius, RearRadius)

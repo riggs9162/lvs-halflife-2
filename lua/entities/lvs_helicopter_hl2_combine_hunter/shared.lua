@@ -29,18 +29,18 @@ ENT.AITEAM = 1
 
 ENT.MaxHealth = 1600
 
-ENT.MaxVelocity = 2150
+ENT.MaxVelocity = 1800
 
 ENT.ThrustUp = 1
-ENT.ThrustDown = 0.8
+ENT.ThrustDown = 0.5
 ENT.ThrustRate = 1
 
 ENT.ThrottleRateUp = 0.2
 ENT.ThrottleRateDown = 0.2
 
-ENT.TurnRatePitch = 1
-ENT.TurnRateYaw = 1
-ENT.TurnRateRoll = 1
+ENT.TurnRatePitch = 0.7
+ENT.TurnRateYaw = 0.7
+ENT.TurnRateRoll = 0.5
 
 ENT.ForceLinearDampingMultiplier = 1.5
 
@@ -230,9 +230,9 @@ function ENT:InitWeapons()
 	weapon.Icon = Material("lvs/weapons/bomb.png")
 	weapon.UseableByAI = false
 	weapon.Ammo = 128
-	weapon.Delay = 1
-	weapon.HeatRateUp = 1
-	weapon.HeatRateDown = 0.5
+	weapon.Delay = 0.25
+	weapon.HeatRateUp = -0.4
+	weapon.HeatRateDown = 0.4
 	weapon.StartAttack = function( ent )
 		local Driver = ent:GetDriver()
 

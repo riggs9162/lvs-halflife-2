@@ -28,10 +28,10 @@ ENT.DSArmorIgnoreForce = 3000
 ENT.CannonArmorPenetration = 9200
 
 ENT.AITEAM = 1
-ENT.MaxHealth = 1600
-ENT.MaxVelocity = 1200
-ENT.EngineCurve = 0.25
-ENT.EngineTorque = 150
+ENT.MaxHealth = 2000
+ENT.MaxVelocity = 1600
+ENT.EngineCurve = 0.5
+ENT.EngineTorque = 300
 
 ENT.TransGears = 1
 ENT.TransGearsReverse = 1
@@ -40,7 +40,7 @@ ENT.EngineSounds = {}
 
 ENT.Lights = {
     {
-        Trigger = "high",
+        Trigger = "high", 
         Sprites = {
             {pos = Vector(0,102,60.5), colorR = 0, colorG = 180, colorB = 220, colorA = 150, size = 60},
             {pos = Vector(3,99.5,56.5), colorR = 0, colorG = 180, colorB = 220, colorA = 150, size = 20}
@@ -50,7 +50,7 @@ ENT.Lights = {
         },
     },
     {
-        Trigger = "main",
+        Trigger = "main", 
         Sprites = {
             {pos = Vector(0,102,60.5), colorR = 0, colorG = 180, colorB = 220, colorA = 150, size = 60},
             {pos = Vector(3,99.5,56.5), colorR = 0, colorG = 180, colorB = 220, colorA = 150, size = 20}
@@ -134,7 +134,7 @@ function ENT:InitWeapons()
             effectdata:SetOrigin(tr.HitPos)
             effectdata:SetScale(6000)
             util.Effect("AirboatGunHeavyTracer", effectdata)
-
+        
             local effectdata = EffectData()
             effectdata:SetOrigin( tr.HitPos + tr.HitNormal)
             effectdata:SetNormal(tr.HitNormal)
@@ -177,14 +177,14 @@ function ENT:InitWeapons()
 
         local AimAngles = self:WorldToLocalAngles(self:GetAimVector():Angle())
 
-        local AimRate = 250 * FrameTime()
-
+        local AimRate = 250 * FrameTime() 
+    
         local Pitch = math.ApproachAngle(self:GetTurretPitch(), AimAngles.p, AimRate)
         local Yaw = math.ApproachAngle(self:GetTurretYaw(), AimAngles.y - 90, AimRate)
 
         self:SetTurretPitch(math.Clamp(Pitch, -100, 140))
         self:SetTurretYaw(math.Clamp(Yaw, -170, 170))
-
+    
         self:SetPoseParameter("vehicle_weapon_pitch", -self:GetTurretPitch())
         self:SetPoseParameter("vehicle_weapon_yaw", -self:GetTurretYaw())
     end
@@ -196,21 +196,21 @@ function ENT:InitWeapons()
         local Muzzle = ent:GetAttachment(ID)
 
         if ( !Muzzle ) then return end
-
+        
         local traceTurret = util.TraceLine( {
             start = Muzzle.Pos,
             endpos = Muzzle.Pos + Muzzle.Ang:Forward() * 5000,
             filter = ent:GetCrosshairFilterEnts()
         } )
 
-        local MuzzlePos2D = traceTurret.HitPos:ToScreen()
+        local MuzzlePos2D = traceTurret.HitPos:ToScreen() 
 
         ent:PaintCrosshairCenter( MuzzlePos2D, Col )
         ent:LVSPaintHitMarker( MuzzlePos2D )
     end
 
     self:AddWeapon(weapon)
-
+    
     local weapon = {}
     weapon.Icon = Material("lvs/weapons/missile.png")
     weapon.Ammo = 60
@@ -275,7 +275,7 @@ function ENT:InitWeapons()
             filter = ent:GetCrosshairFilterEnts()
         } )
 
-        local MuzzlePos2D = traceTurret.HitPos:ToScreen()
+        local MuzzlePos2D = traceTurret.HitPos:ToScreen() 
 
         ent:PaintCrosshairOuter( MuzzlePos2D, Col )
         ent:LVSPaintHitMarker( MuzzlePos2D )

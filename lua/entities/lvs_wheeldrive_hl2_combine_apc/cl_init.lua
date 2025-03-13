@@ -92,6 +92,18 @@ function ENT:Draw()
         self:DrawModel()
     else
         for k, v in ipairs(self.interiorParts) do
+            if ( !IsValid(v) ) then
+                for k, v in ipairs(self.interiorParts) do
+                    if ( IsValid(v) ) then
+                        v:Remove()
+                    end
+                end
+
+                self.interiorParts = {}
+
+                return
+            end
+
             v:DrawModel()
         end
 
