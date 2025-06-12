@@ -2,32 +2,23 @@
 {
     "$baseTexture" "models\ctvehicles\hla\prisoner_transport\apc_cpt_exterior_d"
     "$bumpmap"    "models\ctvehicles\hla\prisoner_transport\apc_cpt_exterior_n"
-    
-    "$detail" "models\ctvehicles\hla\prisoner_transport\apc_cpt_exterior_ao"
-    "$detailscale"    "1"
-    "$detailblendfactor"    "0.1"
-//DIFFUSETINT
-    $COLOR2 "[0.6 0.6 0.6]"
-    "$phong"    "1"
-    "$phongexponent"    "6"
-    "$phongalbedotint"    "1"
-    "$phongboost"    "0.10"
-    "$phongfresnelranges"    "[5 7 8]"
-    "$phongexponenttexture" "models\ctvehicles\hla\prisoner_transport\apc_cpt_exterior_r"
-    "$colorfix" "{255 255 255}"
-    "Proxies"
-    {
-        "Equals"
-        {
-            srcVar1 $colorfix
-            resultVar    $color
-        }
-    }
-//ENVMAP
-    $ENVMAP "ENV_CUBEMAP" 
-    $NORMALMAPALPHAENVMAPMASK "1"                         
-    $ENVMAPFRESNEL "1"                                
-    $ENVMAPTINT "[0.005 0.005 0.005]" //INTENSITY VALUE
+    "$surfaceprop" "metal"
+
+    "$model" "1"
+
+    "$normalmapalphaenvmapmask" "1"
+
+    "$detail" "detail\metal_detail_01"
+    "$detailscale" "8"
+    "$detailblendfactor" "0.5"
+    "$detailblendmode" "0"
+
+    "$envmap" "env_cubemap"
+    "$envmaptint" "[0.01 0.02 0.03]"
+
+    "$phong" "1"
+    "$phongboost" "1.5"
+    "$phongfresnelranges" "[2 1 1]"
+    "$phongtint" "[0.7 0.75 0.8]"
+    "$phongexponent" "100"
 }
-
-
