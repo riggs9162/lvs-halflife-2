@@ -324,6 +324,31 @@ function ENT:InitWeapons()
     self:AddWeapon(weapon)
 
     local weapon = {}
+    weapon.Icon = Material("lvs/weapons/horn.png")
+    weapon.Ammo = -1
+    weapon.Delay = 1
+    weapon.HeatRateUp = 0
+    weapon.HeatRateDown = 0
+    weapon.Attack = function( ent )
+        local entityTable = ent:GetTable()
+
+        if ( !entityTable.m_bPlayingSiren ) then
+            entityTable.m_iLoopSoundID = ent:StartLoopingSound("ambient/alarms/apc_alarm_loop1.wav")
+            entityTable.m_bPlayingSiren = true
+
+            return
+        end
+
+        if ( entityTable.m_iLoopSoundID ) then
+            ent:StopLoopingSound(entityTable.m_iLoopSoundID)
+            entityTable.m_bPlayingSiren = false
+            entityTable.m_iLoopSoundID = nil
+        end
+    end
+
+    self:AddWeapon(weapon)
+
+    local weapon = {}
     weapon.Icon = Material("lvs/weapons/tank_noturret.png")
     weapon.Ammo = -1
     weapon.Delay = 0

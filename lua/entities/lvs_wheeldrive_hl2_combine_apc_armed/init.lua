@@ -72,6 +72,17 @@ function ENT:OnSpawn(PObj)
     local var = GetConVar("lvs_car_hl2_combineapc_health") and GetConVar("lvs_car_hl2_combineapc_health"):GetInt() or 1600
     self.MaxHealth = var
     self:SetHP(var)
+
+    self:CallOnRemove("lvs_removesiren", function(ent, data)
+        if ( !IsValid(ent) ) then return end
+
+        local entityTable = ent:GetTable()
+        if ( entityTable and entityTable.m_iLoopSoundID ) then
+            ent:StopLoopingSound( entityTable.m_iLoopSoundID )
+            entityTable.m_iLoopSoundID = nil
+            entityTable.m_bPlayingSiren = false
+        end
+    end)
 end
 
 function ENT:OnDriverEnterVehicle(ply)
