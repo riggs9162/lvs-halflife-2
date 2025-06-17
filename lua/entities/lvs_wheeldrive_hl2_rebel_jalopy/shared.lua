@@ -18,7 +18,7 @@ ENT.MDL = "models/vehicle.mdl"
 
 ENT.AITEAM = 2
 ENT.MaxHealth = 800
-ENT.MaxVelocity = 1200
+ENT.MaxVelocity = 1600
 ENT.EngineCurve = 0.25
 ENT.EngineTorque = 150
 
@@ -93,7 +93,7 @@ ENT.Lights = {
         },
     },
     {
-        Trigger = "main", 
+        Trigger = "main",
         Sprites = {
             {pos = Vector(-34.5,77.5,29), colorB = 200, colorA = 150},
             {pos = Vector(36.4,77.5,29.5), colorB = 200, colorA = 150},
@@ -106,7 +106,7 @@ ENT.Lights = {
         },
     },
     {
-        Trigger = "main+brake", 
+        Trigger = "main+brake",
         ProjectedTextures = {
             {pos = Vector(15.9,-139.2,53), ang = Angle(40,-90,0), colorG = 0, colorB = 0, colorA = 150, shadows = false, farz = 100},
             {pos = Vector(-17.44,-139.2,53), ang = Angle(40,-90,0), colorG = 0, colorB = 0, colorA = 150, shadows = false, farz = 100},
