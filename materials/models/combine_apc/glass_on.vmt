@@ -9,9 +9,4 @@ VertexLitGeneric
 	$envmaptint "[0.2 0.21 0.18]"
 	$envmapcontrast .9
 	$envmapsaturation 0.5
-	
-	$detail	custom_uni/exponent_albedotint
-	$detailscale 1
-	$detailblendfactor 0.1
-	$detailblendmode 0.5
 }
