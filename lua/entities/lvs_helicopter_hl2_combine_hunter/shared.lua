@@ -37,9 +37,9 @@ ENT.ThrustRate = 1.0
 ENT.ThrottleRateUp = 0.15
 ENT.ThrottleRateDown = 0.15
 
-ENT.TurnRatePitch = 0.90
-ENT.TurnRateYaw = 1.90
-ENT.TurnRateRoll = 0.85
+ENT.TurnRatePitch = 1
+ENT.TurnRateYaw = 3
+ENT.TurnRateRoll = 0.75
 
 ENT.ForceLinearDampingMultiplier = 2.2
 ENT.ForceAngleMultiplier = 1.2

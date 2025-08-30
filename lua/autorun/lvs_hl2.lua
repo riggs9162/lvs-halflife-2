@@ -27,11 +27,11 @@ hook.Add("InitPostEntity", "LVS.HalfLife2", function()
     Initialize()
 end)
 
-hook.Add("PrePlayerDraw", "LVS.HalfLife2", function(ply)
+hook.Add("PrePlayerDraw", "LVS.HalfLife2", function(client)
     if ( !tobool(LVS) ) then return end
-    if ( !IsValid(ply) or !ply:Alive() ) then return end
+    if ( !IsValid(client) or !client:Alive() ) then return end
 
-    local vehicle = ply:lvsGetVehicle()
+    local vehicle = client:lvsGetVehicle()
     if ( !IsValid(vehicle) ) then return end
 
     if ( vehicle:GetClass():lower() == "lvs_wheeldrive_hl2_combine_apc" or vehicle:GetClass():lower() == "lvs_wheeldrive_hl2_combine_apc_armed" or vehicle:GetClass():lower() == "lvs_wheeldrive_hl2_combine_transport" ) then
@@ -43,7 +43,7 @@ hook.Add("PrePlayerDraw", "LVS.HalfLife2", function(ply)
             end
         end
 
-        if ( driver == ply ) then return end
+        if ( driver == client ) then return end
 
         local seat = localPlayer:GetVehicle()
         if ( IsValid(seat) and seat:GetThirdPersonMode() ) then return true end

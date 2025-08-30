@@ -3,21 +3,21 @@ AddCSLuaFile( "cl_init.lua" )
 include("shared.lua")
 include("sv_wheels.lua")
 
-// override function, because hooks dont work for some reason
-function ENT:SetPassenger( ply )
-	if not IsValid( ply ) then return end
+-- override function, because hooks dont work for some reason
+function ENT:SetPassenger( client )
+	if not IsValid( client ) then return end
 
-	if ( ply:GetMoveType() != MOVETYPE_NOCLIP and not self:GetDoor() and not ply:InVehicle() ) then
+	if ( client:GetMoveType() != MOVETYPE_NOCLIP and not self:GetDoor() and not client:InVehicle() ) then
 		self:EmitSound( "doors/default_locked.wav" )
 		return
 	end
 
 	local AI = self:GetAI()
 	local DriverSeat = self:GetDriverSeat()
-	local AllowedToBeDriver = hook.Run( "LVS.CanPlayerDrive", ply, self ) ~= false
+	local AllowedToBeDriver = hook.Run( "LVS.CanPlayerDrive", client, self ) ~= false
 
-	if IsValid( DriverSeat ) and not IsValid( DriverSeat:GetDriver() ) and not ply:KeyDown( IN_WALK ) and not AI and AllowedToBeDriver then
-		ply:EnterVehicle( DriverSeat )
+	if IsValid( DriverSeat ) and not IsValid( DriverSeat:GetDriver() ) and not client:KeyDown( IN_WALK ) and not AI and AllowedToBeDriver then
+		client:EnterVehicle( DriverSeat )
 	else
 		local Seat = NULL
 		local Dist = 500000
@@ -26,7 +26,7 @@ function ENT:SetPassenger( ply )
 			if not IsValid( v ) or IsValid( v:GetDriver() ) then continue end
 			if v:GetNWInt( "pPodIndex" ) == -1 then continue end
 
-			local cDist = (v:GetPos() - ply:GetPos()):Length()
+			local cDist = (v:GetPos() - client:GetPos()):Length()
 
 			if cDist < Dist then
 				Seat = v
@@ -35,14 +35,14 @@ function ENT:SetPassenger( ply )
 		end
 
 		if IsValid( Seat ) then
-			ply:EnterVehicle( Seat )
+			client:EnterVehicle( Seat )
 		else
 			if IsValid( DriverSeat ) then
 				if not IsValid( self:GetDriver() ) and not AI then
 					if AllowedToBeDriver then
-						ply:EnterVehicle( DriverSeat )
+						client:EnterVehicle( DriverSeat )
 					else
-						hook.Run( "LVS.OnPlayerCannotDrive", ply, self )
+						hook.Run( "LVS.OnPlayerCannotDrive", client, self )
 					end
 				end
 			else
@@ -58,7 +58,7 @@ local passengerSeats = {
 	{Vector(0,-20,0), Angle(0,0,0)},
 	{Vector(30,-20,0), Angle(0,0,0)},
 	{Vector(60,-20,0), Angle(0,0,0)},
-	
+
 	{Vector(-30,20,0), Angle(0,180,0)},
 	{Vector(0,20,0), Angle(0,180,0)},
 	{Vector(30,20,0), Angle(0,180,0)},
@@ -69,7 +69,7 @@ function ENT:OnSpawn( PObj )
 	DriverSeat:SetCameraDistance( 0.5 )
 	DriverSeat.HidePlayer = true
 	DriverSeat.ExitPos = Vector(125, 0, 0)
-	
+
 	for k, v in pairs(passengerSeats) do
 		local PassengerSeat = self:AddPassengerSeat(v[1], v[2])
 		PassengerSeat.ExitPos = Vector(125, 0, 0)

@@ -17,13 +17,6 @@ ENT.SpawnNormalOffset = 0
 ENT.MDL = "models/vehicle.mdl"
 
 ENT.AITEAM = 2
-ENT.MaxHealth = 800
-ENT.MaxVelocity = 1200
-ENT.EngineCurve = 0.25
-ENT.EngineTorque = 150
-
-ENT.TransGears = 4
-ENT.TransGearsReverse = 1
 
 ENT.EngineSounds = {
     {
@@ -74,10 +67,6 @@ ENT.ExhaustPositions = {
     },
 }
 
-local redlights = {
-    Vector(25.8,-139.2,53),Vector(24.28,-139.2,53),Vector(22.76,-139.2,53),Vector(21.24,-139.2,53),Vector(19.72,-139.2,53),Vector(18.2,-139.2,53),Vector(16.68,-139.2,53),Vector(15.16,-139.2,53),Vector(13.64,-139.2,53),Vector(12.12,-139.2,53),Vector(10.6,-139.2,53),Vector(9.08,-139.2,53),Vector(7.56,-139.2,53),Vector(6.04,-139.2,53),
-    Vector(-27.32,-139.2,53),Vector(-25.8,-139.2,53),Vector(-24.28,-139.2,53),Vector(-22.76,-139.2,53),Vector(-21.24,-139.2,53),Vector(-19.72,-139.2,53),Vector(-18.2,-139.2,53),Vector(-16.68,-139.2,53),Vector(-15.16,-139.2,53),Vector(-13.64,-139.2,53),Vector(-12.12,-139.2,53),Vector(-10.6,-139.2,53),Vector(-9.08,-139.2,53),Vector(-7.56,-139.2,53)
-}
 ENT.Lights = {
     {
         Trigger = "high",
@@ -121,6 +110,11 @@ ENT.Lights = {
         },
         Sprites = {},
     },
+}
+
+local redlights = {
+    Vector(25.8,-139.2,53),Vector(24.28,-139.2,53),Vector(22.76,-139.2,53),Vector(21.24,-139.2,53),Vector(19.72,-139.2,53),Vector(18.2,-139.2,53),Vector(16.68,-139.2,53),Vector(15.16,-139.2,53),Vector(13.64,-139.2,53),Vector(12.12,-139.2,53),Vector(10.6,-139.2,53),Vector(9.08,-139.2,53),Vector(7.56,-139.2,53),Vector(6.04,-139.2,53),
+    Vector(-27.32,-139.2,53),Vector(-25.8,-139.2,53),Vector(-24.28,-139.2,53),Vector(-22.76,-139.2,53),Vector(-21.24,-139.2,53),Vector(-19.72,-139.2,53),Vector(-18.2,-139.2,53),Vector(-16.68,-139.2,53),Vector(-15.16,-139.2,53),Vector(-13.64,-139.2,53),Vector(-12.12,-139.2,53),Vector(-10.6,-139.2,53),Vector(-9.08,-139.2,53),Vector(-7.56,-139.2,53)
 }
 
 for k, v in pairs(redlights) do

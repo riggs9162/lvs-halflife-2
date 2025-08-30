@@ -18,12 +18,6 @@ ENT.MDL = "models/buggy.mdl"
 
 ENT.AITEAM = 2
 ENT.MaxHealth = 400
-ENT.MaxVelocity = 2200
-ENT.EngineCurve = 0.25
-ENT.EngineTorque = 150
-
-ENT.TransGears = 4
-ENT.TransGearsReverse = 1
 
 ENT.EngineSounds = {
     {
@@ -65,7 +59,7 @@ ENT.Lights = {
         },
     },
     {
-        Trigger = "main", 
+        Trigger = "main",
         Sprites = {
             {pos = Vector(-11,57,38.8), colorB = 200, colorA = 150},
             {pos = Vector(11,57,38.8), colorB = 200, colorA = 150},
@@ -76,20 +70,20 @@ ENT.Lights = {
         },
     },
     {
-        Trigger = "main+brake", 
+        Trigger = "main+brake",
         Sprites = {
             {pos = Vector(-14.9,-101,39.1), colorB = 200, colorA = 150},
         },
     },
     {
-        Trigger = "reverse", 
+        Trigger = "reverse",
         Sprites = {
             {pos = Vector(-14.9,-101,39.1), colorB = 200, colorA = 150},
         },
     },
 }
 
-// taken from one of the armed vehicles
+-- taken from one of the armed vehicles
 function ENT:OnSetupDataTables()
     self:AddDT("Float", "TurretPitch")
     self:AddDT("Float", "TurretYaw")
@@ -156,7 +150,7 @@ function ENT:InitWeapons()
             effect:SetKeyValue("TrailLength", 3)
             effect:Fire("SparkOnce")
             effect:Fire("kill", "", 0.21)
-                
+
             util.Decal("fadingscorch", tr.HitPos - tr.HitNormal, tr.HitPos + tr.HitNormal)
         end
 
@@ -188,8 +182,8 @@ function ENT:InitWeapons()
 
         local AimAngles = self:WorldToLocalAngles(self:GetAimVector():Angle())
 
-        local AimRate = 250 * FrameTime() 
-    
+        local AimRate = 250 * FrameTime()
+
         local Pitch = math.ApproachAngle(self:GetTurretPitch(), -AimAngles.p, AimRate)
         local Yaw = math.ApproachAngle(self:GetTurretYaw(), -AimAngles.y + 90, AimRate)
 

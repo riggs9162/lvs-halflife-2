@@ -3,7 +3,7 @@ AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 
 function ENT:OnSpawn(PObj)
-    // fix angles
+    -- fix angles
     self:SetAngles(self:GetAngles() - Angle(0,90,0))
 
     local Pod = self:AddDriverSeat(Vector(-20,-40,16), Angle(0,0,0))
@@ -14,7 +14,7 @@ function ENT:OnSpawn(PObj)
 
     self:AddEngine(Vector(0,50,40), Angle(0,90,0))
     self:AddFuelTank(Vector(0,0,0), Angle(0,0,0), 600, LVS.FUELTYPE_PETROL)
-    
+
     local FrontRadius = 18
     local RearRadius = 20
     local FL, FR, RL, RR, ForwardAngle = self:AddWheelsUsingRig(FrontRadius, RearRadius)

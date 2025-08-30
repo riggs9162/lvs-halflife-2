@@ -40,7 +40,7 @@ end
 function ENT:AnimTail()
 	local Steer = self:GetSteer()
 
-	local TargetValue = -(Steer.x + Steer.z * 2) * 10
+	local TargetValue = -(Steer.x + Steer.z * 2) * 32
 
 	self.sm_pp_rudder = self.sm_pp_rudder and (self.sm_pp_rudder + (TargetValue - self.sm_pp_rudder) * RealFrameTime() * 5) or 0
 
@@ -51,7 +51,7 @@ function ENT:AnimTail()
 	self.sm_pp_rudder_lerp = math.Approach( self.sm_pp_rudder_lerp, self.sm_pp_rudder, 0.1 * RealFrameTime() * 500 )
 
 	self:SetPoseParameter("rudder", self.sm_pp_rudder_lerp)
-	self:InvalidateBoneCache() 
+	self:InvalidateBoneCache()
 end
 
 function ENT:AnimRotor()
@@ -60,10 +60,10 @@ function ENT:AnimRotor()
 	self.RPM = self.RPM and (self.RPM + RPM * RealFrameTime() * 0.5) or 0
 
 	local Rot1 = Angle( -self.RPM,0,0)
-	Rot1:Normalize() 
-	
+	Rot1:Normalize()
+
 	local Rot2 = Angle(0,0,self.RPM)
-	Rot2:Normalize() 
+	Rot2:Normalize()
 
 	self:ManipulateBoneAngles( 2, Rot1 )
 	self:ManipulateBoneAngles( 5, Rot2 )
@@ -77,7 +77,7 @@ ENT.GlowMaterial = Material( "sprites/light_glow02_add" )
 local LightRedFlashNext = 0
 local LightRedFlastInerta = 0
 function ENT:PreDrawTranslucent()
-	if not self:GetLightsEnabled() then 
+	if !self:GetLightsEnabled() then
 		self:RemoveLight()
 
 		return true
@@ -100,7 +100,7 @@ function ENT:PreDrawTranslucent()
 
 	for i = 0, 2 do
 		local Light_Red = self:GetAttachment( self:LookupAttachment( "Light_Red" .. i ) )
-		if not Light_Red then continue end
+		if !Light_Red then continue end
 
 		local size = 64 + math.sin( CurTime() * 10 ) * 4
 		size = size * LightRedFlastInerta
@@ -123,16 +123,16 @@ function ENT:PreDrawTranslucent()
 
 	local SpotLight = self:GetAttachment( self:LookupAttachment( "SpotLight" ) )
 
-	if not SpotLight then return true end
+	if !SpotLight then return true end
 
-	if not IsValid( self.projector ) then
+	if !IsValid( self.projector ) then
 		local thelamp = ProjectedTexture()
-		thelamp:SetBrightness( 6 ) 
+		thelamp:SetBrightness( 6 )
 		thelamp:SetTexture( "effects/flashlight/soft" )
-		thelamp:SetColor( Color(255,255,255) ) 
-		thelamp:SetEnableShadows( true ) 
-		thelamp:SetFarZ( 4096 ) 
-		thelamp:SetNearZ( 96 ) 
+		thelamp:SetColor( Color(255,255,255) )
+		thelamp:SetEnableShadows( true )
+		thelamp:SetFarZ( 4096 )
+		thelamp:SetNearZ( 96 )
 		thelamp:SetFOV( 60 )
 		self.projector = thelamp
 	end
@@ -143,7 +143,7 @@ function ENT:PreDrawTranslucent()
 	render.DrawSprite( SpotLight.Pos + Dir * 5, 64, 64, Color( 255, 255, 255, 255) )
 
 	render.SetMaterial( self.LightMaterial )
-	render.DrawBeam( SpotLight.Pos, SpotLight.Pos + Dir * 256, 64, 0, 0.99, Color( 100, 100, 100, 200) ) 
+	render.DrawBeam( SpotLight.Pos, SpotLight.Pos + Dir * 256, 64, 0, 0.99, Color( 100, 100, 100, 200) )
 
 	if IsValid( self.projector ) then
 		self.projector:SetPos( SpotLight.Pos )
