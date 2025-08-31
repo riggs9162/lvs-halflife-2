@@ -234,7 +234,7 @@ function ENT:InitWeapons()
 			ent.deploySound:PlayEx(0, 100)
 		end
 
-		// Check if we are near the ground, if so open the door, if not close it
+		-- Check if we are near the ground, if so open the door, if not close it
 		local trace = util.TraceLine({
 			start = ent:GetPos(),
 			endpos = ent:GetPos() - Vector(0, 0, 100),

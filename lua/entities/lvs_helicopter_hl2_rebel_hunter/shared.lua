@@ -29,23 +29,21 @@ ENT.AITEAM = 2
 
 ENT.MaxHealth = 1600
 
-ENT.MaxVelocity = 1800
+ENT.MaxVelocity = 1600
+ENT.ThrustUp = 1.3
+ENT.ThrustDown = 0.7
+ENT.ThrustRate = 1.0
 
-ENT.ThrustUp = 1
-ENT.ThrustDown = 0.5
-ENT.ThrustRate = 1
+ENT.ThrottleRateUp = 0.15
+ENT.ThrottleRateDown = 0.15
 
-ENT.ThrottleRateUp = 0.2
-ENT.ThrottleRateDown = 0.2
+ENT.TurnRatePitch = 0.90
+ENT.TurnRateYaw = 1.90
+ENT.TurnRateRoll = 0.85
 
-ENT.TurnRatePitch = 0.7
-ENT.TurnRateYaw = 0.7
-ENT.TurnRateRoll = 0.5
-
-ENT.ForceLinearDampingMultiplier = 1.5
-
-ENT.ForceAngleMultiplier = 1
-ENT.ForceAngleDampingMultiplier = 1
+ENT.ForceLinearDampingMultiplier = 2.2
+ENT.ForceAngleMultiplier = 1.2
+ENT.ForceAngleDampingMultiplier = 1.8
 
 ENT.EngineSounds = {
 	{
@@ -82,7 +80,7 @@ end
 function ENT:WeaponsInRange()
 	local AimAngles = self:GetAimAngles()
 
-	return math.abs( AimAngles.y ) < 40 and AimAngles.p < 90 and AimAngles.p > -20
+	return math.abs( AimAngles.y ) < 45 and AimAngles.p < 90 and AimAngles.p > -35
 end
 
 function ENT:SetPoseParameterTurret()
@@ -93,6 +91,10 @@ function ENT:SetPoseParameterTurret()
 end
 
 function ENT:HandleShoot( FireInput, active )
+	if not self:WeaponsInRange() then
+		self._doAttack = nil
+		self.charging = nil
+	end
 	self.charge = self.charge or 0
 
 	if self.charging then
@@ -135,8 +137,6 @@ function ENT:HandleShoot( FireInput, active )
 
 	if Fire then
 		self:SetHeat( 1 - self.charge / 100 )
-	else
-		self:SetHeat( math.Clamp(self.charge / 100,0,0.89) ) -- clamp to 0.89 so the ai doesnt detect it as overheating
 	end
 end
 
@@ -169,9 +169,9 @@ function ENT:ShootGun()
 
 	if (self.NextFire or 0) > T then return end
 
-	self.NextFire = T + 0.03
+	self.NextFire = T + 0.02
 
-	self.charge = self.charge - 0.9
+	self.charge = self.charge - 0.5
 
 	local Muzzle = self:GetAttachment( self:LookupAttachment( "muzzle" ) )
 
@@ -182,11 +182,11 @@ function ENT:ShootGun()
 	local bullet = {}
 	bullet.Src 	= Muzzle.Pos
 	bullet.Dir 	= (trace.HitPos - Muzzle.Pos):GetNormalized()
-	bullet.Spread 	= Vector(0.06,0.06,0.06)
+	bullet.Spread 	= Vector(0.1,0.1,0.1)
 	bullet.TracerName = "lvs_pulserifle_tracer"
 	bullet.Force	= 1000
 	bullet.HullSize 	= 6
-	bullet.Damage	= 6
+	bullet.Damage	= 4
 	bullet.Velocity = 15000
 	bullet.Attacker 	= self:GetDriver()
 	bullet.Callback = function(att, tr, dmginfo)
@@ -209,8 +209,8 @@ function ENT:InitWeapons()
 	weapon.Icon = Material("lvs/weapons/mg.png")
 	weapon.Ammo = -1
 	weapon.Delay = 0
-	weapon.HeatRateUp = 0
-	weapon.HeatRateDown = 0
+	weapon.HeatRateUp = 0.1
+	weapon.HeatRateDown = 0.25
 	weapon.StartAttack = function( ent )
 		ent:ChargeGun()
 	end
@@ -236,7 +236,7 @@ function ENT:InitWeapons()
 	weapon.StartAttack = function( ent )
 		local Driver = ent:GetDriver()
 
-		local projectile = ents.Create( "lvs_helicopter_hl2_rebel_hunter_bomb" )
+		local projectile = ents.Create( "lvs_helicopter_combine_bomb" )
 		projectile:SetPos( ent:LocalToWorld( Vector(-50,0,-25) ) )
 		projectile:SetAngles( ent:GetAngles() )
 		projectile:SetParent( ent )
@@ -282,13 +282,4 @@ function ENT:InitWeapons()
 		ent:EmitSound( "items/flashlight1.wav", 75, 105 )
 	end
 	self:AddWeapon( weapon )
-
-	local weapon = {}
-	weapon.Icon = Material("lvs/weapons/tank_noturret.png")
-	weapon.Ammo = -1
-	weapon.Delay = 0
-	weapon.HeatRateUp = 0
-	weapon.HeatRateDown = 0
-
-	self:AddWeapon(weapon)
 end

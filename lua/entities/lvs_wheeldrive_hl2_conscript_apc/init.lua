@@ -3,7 +3,7 @@ AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 
 function ENT:OnSpawn(PObj)
-    // fix angles
+    -- fix angles
     self:SetAngles(self:GetAngles() - Angle(0,90,0))
 
     local Pod = self:AddDriverSeat(Vector(-15,75,0), Angle(0,0,0))
@@ -14,7 +14,7 @@ function ENT:OnSpawn(PObj)
     Pod.ExitPos = Vector(60,75,0)
     Pod.HidePlayer = true
 
-    // add more 8 seats
+    -- add more 8 seats
     for i = 1, 8 do
         Pod = self:AddPassengerSeat(Vector(0,-50,0), Angle(0,0,0))
         Pod.ExitPos = Vector(math.random(1, 2) == 1 and 100 or -100,0,64)
@@ -23,7 +23,7 @@ function ENT:OnSpawn(PObj)
 
     self:AddEngine(Vector(-20,-80,50))
     self:AddFuelTank(Vector(-61.34,49.71,15.98), Angle(0,0,0), 600, LVS.FUELTYPE_DIESEL)
-    
+
     local WheelModel = "models/props_vehicles/apc_tire001.mdl"
 
     local WheelFrontLeft = self:AddWheel({

@@ -223,7 +223,7 @@ function ENT:InitWeapons()
 		end )
 	end
 	weapon.OnSelect = function( ent ) ent:EmitSound("physics/metal/weapon_impact_soft3.wav") end
-	weapon.HudPaint = function( ent, X, Y, ply )
+	weapon.HudPaint = function( ent, X, Y, client )
 		local base = ent:GetBody()
 
 		if not IsValid( base ) then return end

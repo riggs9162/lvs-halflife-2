@@ -1,5 +1,7 @@
 include("shared.lua")
 
+ENT.TrackSounds = ""
+
 function ENT:UpdatePoseParameters(steer, speed_kmh, engine_rpm, throttle, brake, handbrake, clutch, gear, temperature, fuel, oil, ammeter)
     self:SetPoseParameter("vehicle_steer", steer)
 
@@ -38,7 +40,7 @@ end
 function ENT:OnSpawn(PObj)
     self.interiorParts = {}
 
-    local interiorPos = Vector(0, -130, 70)
+    local interiorPos = Vector(-130, 0, 70)
     local interiorModels = {
         "models/riggs9162/apc_interior_0.mdl",
         "models/riggs9162/apc_interior_1.mdl",
@@ -54,7 +56,7 @@ function ENT:OnSpawn(PObj)
     for k, v in ipairs(interiorModels) do
         local interior = ClientsideModel(v, RENDERGROUP_OPAQUE)
         interior:SetPos(self:LocalToWorld(interiorPos))
-        interior:SetAngles(self:GetAngles())
+        interior:SetAngles(self:GetAngles() + Angle(0, 270, 0))
         interior:SetParent(self)
         interior:Spawn()
         interior:Activate()
@@ -66,23 +68,23 @@ function ENT:OnSpawn(PObj)
 end
 
 function ENT:Draw()
-	if ( !self.LightProp ) then
-		self.LightProp = ClientsideModel("models/props_combine/combine_light001a.mdl")
-		self.LightProp:SetPos(self:LocalToWorld(Vector(0, 95, 34)))
-		self.LightProp:SetAngles(self:GetAngles() + Angle(0, -90, 0))
-		self.LightProp:SetParent(self)
+    if ( !self.LightProp ) then
+        self.LightProp = ClientsideModel("models/props_combine/combine_light001a.mdl")
+        self.LightProp:SetPos(self:LocalToWorld(Vector(95, 0, 34)))
+        self.LightProp:SetAngles(self:GetAngles() + Angle(0, 180, 0))
+        self.LightProp:SetParent(self)
         self.LightProp:SetModelScale(0.75)
-	end
+    end
 
-    local ply = LocalPlayer()
-    local vehicle = ply:GetVehicle()
-    local lvsVehicle = ply:lvsGetVehicle()
+    local client = LocalPlayer()
+    local vehicle = client:GetVehicle()
+    local lvsVehicle = client:lvsGetVehicle()
     if ( !IsValid(vehicle) or !IsValid(lvsVehicle) ) then
         self:DrawModel()
         return
     end
 
-    if ( lvsVehicle != self or lvsVehicle:GetDriver() == ply ) then
+    if ( lvsVehicle != self or lvsVehicle:GetDriver() == client ) then
         self:DrawModel()
         return
     end

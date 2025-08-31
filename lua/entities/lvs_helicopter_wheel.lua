@@ -71,7 +71,7 @@ if SERVER then
 		return self._baseEnt
 	end
 
-	function ENT:Use( ply )
+	function ENT:Use( client )
 	end
 
 	function ENT:Think()

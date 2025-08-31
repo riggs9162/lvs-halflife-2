@@ -60,7 +60,7 @@ function ENT:OnSpawn(PObj)
 
         interior:SetNoDraw(true)
 
-        // Stretch the model to fit the interior
+        -- Stretch the model to fit the interior
         local scale = Vector(1, 1.5, 1)
 
         local mat = Matrix()
@@ -80,15 +80,15 @@ function ENT:Draw()
         self.LightProp:SetModelScale(0.75)
 	end
 
-    local ply = LocalPlayer()
-    local vehicle = ply:GetVehicle()
-    local lvsVehicle = ply:lvsGetVehicle()
+    local client = LocalPlayer()
+    local vehicle = client:GetVehicle()
+    local lvsVehicle = client:lvsGetVehicle()
     if not ( IsValid(vehicle) and IsValid(lvsVehicle) ) then
         self:DrawModel()
         return
     end
 
-    if ( lvsVehicle != self or lvsVehicle:GetDriver() == ply ) then
+    if ( lvsVehicle != self or lvsVehicle:GetDriver() == client ) then
         self:DrawModel()
         return
     end

@@ -3,13 +3,13 @@ AddCSLuaFile("cl_init.lua")
 include("shared.lua")
 
 function ENT:OnSpawn(PObj)
-    // fix angles
+    -- fix angles
     self:SetAngles(self:GetAngles() - Angle(0,90,0))
 
     local Pod = self:AddDriverSeat(Vector(0,-30,65), Angle(0,0,0))
     Pod.ExitPos = Vector(-44.58,13.57,69.06)
 
-    // add 8 seats
+    -- add 8 seats
     for i = 1, 8 do
         local pos, ang = Vector(-30, -80, 50), Angle(0, -90, 0)
         pos.y = pos.y - (i - 1) * 24
@@ -26,7 +26,7 @@ function ENT:OnSpawn(PObj)
     end
 
     self:AddEngine(Vector(0,87,50))
-    
+
     local FrontRadius = 21
     local RearRadius = 23
     local FL, FR, RL, RR, ForwardAngle = self:AddWheelsUsingRig(FrontRadius, RearRadius)

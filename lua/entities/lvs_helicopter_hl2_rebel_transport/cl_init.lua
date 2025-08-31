@@ -1,7 +1,7 @@
 include("shared.lua")
 
-function ENT:CalcViewPassenger( ply, pos, angles, fov, pod )
-	if pod == self:GetGunnerSeat() then return LVS:CalcView( self, ply, pos, angles, fov, pod ) end
+function ENT:CalcViewPassenger( client, pos, angles, fov, pod )
+	if pod == self:GetGunnerSeat() then return LVS:CalcView( self, client, pos, angles, fov, pod ) end
 
 	local view = {}
 	view.origin = pos
@@ -9,7 +9,7 @@ function ENT:CalcViewPassenger( ply, pos, angles, fov, pod )
 	view.fov = fov
 	view.drawviewer = false
 
-	local Pod = ply:GetVehicle()
+	local Pod = client:GetVehicle()
 
 	if not IsValid( Pod ) then return view end
 
@@ -28,7 +28,7 @@ function ENT:CalcViewPassenger( ply, pos, angles, fov, pod )
 		filter = function( e )
 			local c = e:GetClass()
 			local collide = not c:StartWith( "prop_physics" ) and not c:StartWith( "prop_dynamic" ) and not c:StartWith( "prop_ragdoll" ) and not e:IsVehicle() and not c:StartWith( "gmod_" ) and not c:StartWith( "player" ) and not e.LVS
-			
+
 			return collide
 		end,
 		mins = Vector( -WallOffset, -WallOffset, -WallOffset ),
