@@ -23,7 +23,7 @@ end
 
 timer.Simple(5, Initialize)
 
-hook.Add("InitPostEntity", "LVS.HalfLife2", function()
+hook.Add("InitPostEntity", "LVS.HL2", function()
     Initialize()
 end)
 
@@ -33,7 +33,7 @@ local combineAPCs = {
     ["lvs_wheeldrive_hl2_combine_transport"] = true,
 }
 
-hook.Add("PrePlayerDraw", "LVS.HalfLife2", function(client)
+hook.Add("PrePlayerDraw", "LVS.HL2", function(client)
     if ( !tobool(LVS) ) then return end
     if ( !IsValid(client) or !client:Alive() ) then return end
 
