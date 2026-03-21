@@ -46,20 +46,24 @@ function ENT:OnSpawn(PObj)
         interior:SetParent(self)
         interior:Spawn()
         interior:Activate()
+
         interior:SetNoDraw(true)
+
         self.interiorParts[k] = interior
     end
+
+    self.LightProp = ClientsideModel("models/props_combine/combine_light001a.mdl")
+    self.LightProp:SetPos(self:LocalToWorld(Vector(95, 0, 34)))
+    self.LightProp:SetAngles(self:GetAngles() + Angle(0, 180, 0))
+    self.LightProp:SetParent(self)
+    self.LightProp:Spawn()
+    self.LightProp:Activate()
+
+    self.LightProp:SetModelScale(0.75)
+    self.LightProp:SetNoDraw(true)
 end
 
-function ENT:Draw()
-    if ( !self.LightProp ) then
-        self.LightProp = ClientsideModel("models/props_combine/combine_light001a.mdl")
-        self.LightProp:SetPos(self:LocalToWorld(Vector(95, 0, 34)))
-        self.LightProp:SetAngles(self:GetAngles() + Angle(0, 180, 0))
-        self.LightProp:SetParent(self)
-        self.LightProp:SetModelScale(0.75)
-    end
-
+function ENT:DrawInterior()
     local client = LocalPlayer()
     local vehicle = client:GetVehicle()
     local lvsVehicle = client:lvsGetVehicle()
@@ -107,6 +111,31 @@ function ENT:Draw()
             end
         end
     end
+end
+
+function ENT:DrawLightProp()
+    if ( !IsValid(self.LightProp) ) then return end
+
+    self.LightProp:DrawModel()
+end
+
+function ENT:Draw()
+    if ( self:GetHornEnabled() ) then
+        if ( !self.HornSound ) then
+            self.HornSound = CreateSound(self, "ambient/alarms/apc_alarm_loop1.wav")
+            self.HornSound:SetSoundLevel(80)
+        elseif ( !self.HornSound:IsPlaying() ) then
+            self.HornSound:Play()
+        end
+    else
+        if ( self.HornSound ) then
+            self.HornSound:FadeOut(1)
+            self.HornSound = nil
+        end
+    end
+
+    self:DrawInterior()
+    self:DrawLightProp()
 end
 
 function ENT:OnRemoved()
