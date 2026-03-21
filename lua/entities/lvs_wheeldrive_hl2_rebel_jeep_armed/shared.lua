@@ -7,19 +7,22 @@ ENT.Spawnable = true
 ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Resistance"
 
--- taken from one of the armed vehicles
-function ENT:OnSetupDataTables()
-    self:AddDT("Float", "TurretPitch")
-    self:AddDT("Float", "TurretYaw")
-    self:AddDT("Bool", "TurretEnabled")
-    if SERVER then self:SetTurretEnabled(true) end
-end
+include("entities/lvs_tank_wheeldrive/modules/sh_turret.lua")
+include("entities/lvs_tank_wheeldrive/modules/sh_turret_ballistics.lua")
 
-function ENT:IsTurretEnabled()
-    if self:GetHP() <= 0 then return false end
-    if not self:GetTurretEnabled() then return false end
-    return IsValid(self:GetDriver()) or self:GetAI()
-end
+ENT.TurretBallisticsmuzzleAttachment = "Muzzlee"
+ENT.TurretAimRate = 100
+ENT.TurretRotationSound = "vehicles/tank_turret_loop1.wav"
+ENT.TurretPitchPoseParameterName = "vehicle_weapon_pitch"
+ENT.TurretPitchMin = -15
+ENT.TurretPitchMax = 15
+ENT.TurretPitchMul = -1
+ENT.TurretPitchOffset = 0
+ENT.TurretYawPoseParameterName = "vehicle_weapon_yaw"
+ENT.TurretYawMin = -100
+ENT.TurretYawMax = 170
+ENT.TurretYawMul = -1
+ENT.TurretYawOffset = 0
 
 CreateConVar("lvs_car_hl2_jeep_damage", 10, nil, "Controls the damage of the main gun from the Jeep.")
 
@@ -33,19 +36,27 @@ function ENT:InitWeapons()
     weapon.Attack = function(ent)
         local ID = ent:LookupAttachment("muzzle")
         local Muzzle = ent:GetAttachment(ID)
-        if not Muzzle then return end
+        if !Muzzle then return end
+
         local bullet = {}
         bullet.Src = Muzzle.Pos
         bullet.Dir = Muzzle.Ang:Forward()
         bullet.Spread = Vector(0.015, 0.015, 0)
-        bullet.Tracer = 1
-        bullet.TracerName = "lvs_hl2_gausstracer"
+        bullet.Tracer = 0
+        bullet.TracerName = "none"
         bullet.Force = 50
         bullet.HullSize = 15
         bullet.Damage = tonumber(GetConVar("lvs_car_hl2_jeep_damage"):GetString())
         bullet.Velocity = 30000
         bullet.Attacker = ent:GetDriver()
         bullet.Callback = function(att, tr, dmginfo)
+            local effectData = EffectData()
+            effectData:SetEntity(ent)
+            effectData:SetAttachment(ID)
+            effectData:SetStart(Muzzle.Pos)
+            effectData:SetOrigin(tr.HitPos)
+            util.Effect("lvs_hl2_gausstracer", effectData)
+
             local effect = ents.Create("env_spark")
             effect:SetKeyValue("targetname", "target")
             effect:SetPos(tr.HitPos + tr.HitNormal * 2)
@@ -67,19 +78,22 @@ function ENT:InitWeapons()
 
     weapon.OnSelect = function(ent) if ent.SetTurretEnabled then ent:SetTurretEnabled(true) end end
     weapon.OnDeselect = function(ent) if ent.SetTurretEnabled then ent:SetTurretEnabled(false) end end
-    weapon.OnThink = function(ent, active)
-        if not ent:GetTurretEnabled() then return end
-        local AimAngles = self:WorldToLocalAngles(self:GetAimVector():Angle())
-        local AimRate = 250 * FrameTime()
-        local Pitch = math.ApproachAngle(self:GetTurretPitch(), -AimAngles.p, AimRate)
-        local Yaw = math.ApproachAngle(self:GetTurretYaw(), -AimAngles.y + 90, AimRate)
-        self:SetTurretPitch(math.Clamp(Pitch, -60, 60))
-        self:SetTurretYaw(math.Clamp(Yaw, -120, 120))
-        self:SetPoseParameter("vehicle_weapon_pitch", self:GetTurretPitch())
-        self:SetPoseParameter("vehicle_weapon_yaw", self:GetTurretYaw())
-    end
 
     weapon.OnOverheat = function(ent) ent:EmitSound("lvs/overheat.wav") end
+    weapon.HudPaint = function(ent, X, Y, client)
+        local muzzle = ent:GetAttachment(ent:LookupAttachment("muzzle"))
+        if !muzzle then return end
+        local traceTurret = util.TraceLine({
+            start = muzzle.Pos,
+            endpos = muzzle.Pos + muzzle.Ang:Forward() * 50000,
+            filter = ent:GetCrosshairFilterEnts()
+        })
+
+        local muzzlePos2D = traceTurret.HitPos:ToScreen()
+        ent:PaintCrosshairOuter(muzzlePos2D, COLOR_WHITE)
+        ent:LVSPaintHitMarker(muzzlePos2D)
+    end
+
     self:AddWeapon(weapon)
 
     weapon = {}
