@@ -7,7 +7,7 @@ ENT.IconOverride = "materials/entities/lvs/hl2/rebel_jeep.png"
 
 ENT.AITEAM = 2
 ENT.AdminSpawnable = false
-ENT.MDL = "models/buggy.mdl"
+ENT.MDL = "models/riggs9162/vehicles/jeep.mdl"
 ENT.SpawnNormalOffset = 0
 ENT.Spawnable = true
 ENT.VehicleCategory = "Half Life 2"
@@ -68,8 +68,8 @@ ENT.TireSoundTypes = {
 
 ENT.ExhaustPositions = {
     {
-        pos = Vector(13.1, -88.31, 34.3),
-        ang = Angle(0, -90, 0),
+        pos = Vector(-88.31, -13.1, 34.3),
+        ang = Angle(0, 180, 0),
     },
 }
 
@@ -78,28 +78,28 @@ ENT.Lights = {
         Trigger = "high",
         Sprites = {
             {
-                pos = Vector(-11, 57, 38.8),
+                pos = Vector(57, 11, 38.8),
                 colorB = 200,
                 colorA = 150
             },
             {
-                pos = Vector(11, 57, 38.8),
+                pos = Vector(57, -11, 38.8),
                 colorB = 200,
                 colorA = 150
             },
         },
         ProjectedTextures = {
             {
-                pos = Vector(-11, 55, 35),
-                ang = Angle(0, 90, 0),
+                pos = Vector(55, 11, 35),
+                ang = Angle(0, 0, 0),
                 colorB = 200,
                 colorA = 150,
                 shadows = false,
                 farz = 2000
             },
             {
-                pos = Vector(11, 55, 35),
-                ang = Angle(0, 90, 0),
+                pos = Vector(55, -11, 35),
+                ang = Angle(0, 0, 0),
                 colorB = 200,
                 colorA = 150,
                 shadows = false,
@@ -111,28 +111,28 @@ ENT.Lights = {
         Trigger = "main",
         Sprites = {
             {
-                pos = Vector(-11, 57, 38.8),
+                pos = Vector(57, 11, 38.8),
                 colorB = 200,
                 colorA = 150
             },
             {
-                pos = Vector(11, 57, 38.8),
+                pos = Vector(57, -11, 38.8),
                 colorB = 200,
                 colorA = 150
             },
         },
         ProjectedTextures = {
             {
-                pos = Vector(-11, 55, 35),
-                ang = Angle(10, 90, 0),
+                pos = Vector(55, 11, 35),
+                ang = Angle(10, 0, 0),
                 colorB = 200,
                 colorA = 150,
                 shadows = false,
                 farz = 1000
             },
             {
-                pos = Vector(11, 55, 35),
-                ang = Angle(10, 90, 0),
+                pos = Vector(55, -11, 35),
+                ang = Angle(10, 0, 0),
                 colorB = 200,
                 colorA = 150,
                 shadows = false,
@@ -144,7 +144,7 @@ ENT.Lights = {
         Trigger = "main+brake",
         Sprites = {
             {
-                pos = Vector(-14.9, -101, 39.1),
+                pos = Vector(-101, 14.9, 39.1),
                 colorB = 200,
                 colorA = 150
             },
@@ -154,7 +154,7 @@ ENT.Lights = {
         Trigger = "reverse",
         Sprites = {
             {
-                pos = Vector(-14.9, -101, 39.1),
+                pos = Vector(-101, 14.9, 39.1),
                 colorB = 200,
                 colorA = 150
             },
