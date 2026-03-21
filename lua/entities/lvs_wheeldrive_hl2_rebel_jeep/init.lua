@@ -1,22 +1,18 @@
-AddCSLuaFile("shared.lua")
 AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:OnSpawn(PObj)
-    -- fix angles
-    self:SetAngles(self:GetAngles() - Angle(0,90,0))
+    self:SetAngles(self:GetAngles() - Angle(0, 90, 0))
 
-    local Pod = self:AddDriverSeat(Vector(-8.5,-50,15), Angle(0,0,0))
-    Pod.ExitPos = Vector(-64,-30,38)
+    local Pod = self:AddDriverSeat(Vector(-8.5, -50, 15), Angle(0, 0, 0))
+    Pod.ExitPos = Vector(-64, -30, 38)
 
-    self:AddEngine(Vector(8,-75,37))
-    self:AddFuelTank(Vector(0,0,0), Angle(0,0,0), 600, LVS.FUELTYPE_PETROL)
+    self:AddEngine(Vector(8, -75, 37))
+    self:AddFuelTank(Vector(0, 0, 0), Angle(0, 0, 0), 600, LVS.FUELTYPE_PETROL)
 
-    local FrontRadius = 18
-    local RearRadius = 18
-    local FL, FR, RL, RR, ForwardAngle = self:AddWheelsUsingRig(FrontRadius, RearRadius)
-
-    local FrontAxle = self:DefineAxle({
+    local FL, FR, RL, RR, ForwardAngle = self:AddWheelsUsingRig(18, 19)
+    self:DefineAxle({
         Axle = {
             ForwardAngle = ForwardAngle,
             SteerType = LVS.WHEEL_STEER_FRONT,
@@ -26,7 +22,7 @@ function ENT:OnSpawn(PObj)
         },
         Wheels = {FL, FR},
         Suspension = {
-            Height = 20,
+            Height = 16,
             MaxTravel = 7,
             ControlArmLength = 100,
             SpringConstant = 20000,
@@ -35,7 +31,7 @@ function ENT:OnSpawn(PObj)
         },
     })
 
-    local RearAxle = self:DefineAxle({
+    self:DefineAxle({
         Axle = {
             ForwardAngle = ForwardAngle,
             SteerType = LVS.WHEEL_STEER_NONE,
@@ -45,7 +41,7 @@ function ENT:OnSpawn(PObj)
         },
         Wheels = {RL, RR},
         Suspension = {
-            Height = 20,
+            Height = 16,
             MaxTravel = 7,
             ControlArmLength = 100,
             SpringConstant = 20000,
@@ -53,4 +49,15 @@ function ENT:OnSpawn(PObj)
             SpringRelativeDamping = 2000,
         },
     })
+
+    if ( self.PostOnSpawn ) then self:PostOnSpawn(PObj) end
+end
+
+function ENT:OnEngineActiveChanged(Active)
+    if ( Active ) then
+        self:ResetSequence("idle_running")
+    else
+        self:ResetSequence("idle")
+        self:EmitSound("vehicles/v8/v8_stop1.wav")
+    end
 end
