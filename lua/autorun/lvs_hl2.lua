@@ -43,9 +43,6 @@ hook.Add("PrePlayerDraw", "LVS.HL2", function(client)
     if ( combineAPCs[vehicle:GetClass():lower()] ) then
         local driver = vehicle:GetDriver()
         local localPlayer = LocalPlayer()
-        if ( IsValid(driver) and driver == localPlayer ) then
-            return true
-        end
 
         if ( driver == client ) then return end
 
