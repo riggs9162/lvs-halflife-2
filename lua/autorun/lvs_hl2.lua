@@ -4,10 +4,10 @@ local function Initialize()
         return
     end
 
-    list.Set("ContentCategoryIcons", "[LVS] - Half Life 2", "games/16/hl2.png")
-    list.Set("ContentCategoryIcons", "[LVS] - Half Life 2 - Civilian", "games/16/hl2.png")
-    list.Set("ContentCategoryIcons", "[LVS] - Half Life 2 - Combine", "games/16/hl2.png")
-    list.Set("ContentCategoryIcons", "[LVS] - Half Life 2 - Resistance", "games/16/hl2.png")
+    list.Set("ContentCategoryIcons", "[LVS] - Half Life 2", "icon16/lvs_resistance.png")
+    list.Set("ContentCategoryIcons", "[LVS] - Half Life 2 - Civilian", "icon16/lvs_civilian.png")
+    list.Set("ContentCategoryIcons", "[LVS] - Half Life 2 - Combine", "icon16/lvs_combine.png")
+    list.Set("ContentCategoryIcons", "[LVS] - Half Life 2 - Resistance", "icon16/lvs_resistance.png")
 
     CreateConVar("lvs_car_hl2_combineapc_damage", 10, nil, "Controls the damage of the main gun from the Combine APC.")
     CreateConVar("lvs_car_hl2_combineapc_rocketdamage", 1000, nil, "Controls the damage of the Missle from the Combine APC.")
