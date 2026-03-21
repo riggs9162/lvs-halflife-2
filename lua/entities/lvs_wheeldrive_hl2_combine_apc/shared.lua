@@ -103,3 +103,25 @@ ENT.Lights = {
         },
     },
 }
+
+function ENT:OnSetupDataTables()
+    self:AddDT("Bool", "HornEnabled")
+end
+
+function ENT:InitWeapons()
+    local weapon = {}
+    weapon.Icon = Material("lvs/weapons/horn.png")
+    weapon.Ammo = -1
+    weapon.Delay = 1
+    weapon.HeatRateUp = 0
+    weapon.HeatRateDown = 0
+    weapon.Attack = function(ent)
+        if ent.GetHornEnabled and ent:GetHornEnabled() then
+            self:SetHornEnabled(false)
+        elseif ent.GetHornEnabled and !ent:GetHornEnabled() then
+            self:SetHornEnabled(true)
+        end
+    end
+
+    self:AddWeapon(weapon)
+end
