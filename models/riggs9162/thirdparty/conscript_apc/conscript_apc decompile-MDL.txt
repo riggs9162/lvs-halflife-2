@@ -1,0 +1,84 @@
+// Created by Crowbar 0.74
+====== File Size ======
+	5.204
+====== File Seek Log ======
+	0 - 79 MDL File Header 00 (MDL version: 48); MDL File Header 00 (MDL version: 48)
+	80 - 407 MDL File Header 01; MDL File Header 01
+	408 - 663 MDL File Header 02; MDL File Header 02
+	664 - 1.743 theMdlFileData.theBones 5
+	1.744 - 1.927 theMdlFileData.theAttachments 2
+	1.928 - 1.939 theMdlFileData.theHitboxSets 1
+	1.940 - 2.143 aHitboxSet.theHitboxes 3
+	2.144 - 2.148 theMdlFileData.theBoneTableByName
+	2.149 - 2.151 [ERROR] Unread bytes (all zeroes) [ 00 00 00 ]
+	2.152 - 2.951 theMdlFileData.theAnimationDescs 8
+	2.952 - 2.959 [ERROR] Unread bytes (all zeroes) [ 00 00 00 00 00 00 00 00 ]
+	2.960 - 2.971 anAnimationDesc.anAnimation  [@idle] (frameCount = 1; sectionFrameCount = 1)
+	2.972 - 2.975 anAnimationDesc.anAnimation [@idle] (unused empty data structure at the end of the list)
+	2.976 - 2.987 anAnimationDesc.anAnimation  [neutral] (frameCount = 1; sectionFrameCount = 1)
+	2.988 - 2.991 anAnimationDesc.anAnimation [neutral] (unused empty data structure at the end of the list)
+	2.992 - 3.003 anAnimationDesc.anAnimation  [aim_y_1] (frameCount = 1; sectionFrameCount = 1)
+	3.004 - 3.007 anAnimationDesc.anAnimation [aim_y_1] (unused empty data structure at the end of the list)
+	3.008 - 3.019 anAnimationDesc.anAnimation  [aim_y_2] (frameCount = 1; sectionFrameCount = 1)
+	3.020 - 3.023 anAnimationDesc.anAnimation [aim_y_2] (unused empty data structure at the end of the list)
+	3.024 - 3.035 anAnimationDesc.anAnimation  [aim_y_3] (frameCount = 1; sectionFrameCount = 1)
+	3.036 - 3.039 anAnimationDesc.anAnimation [aim_y_3] (unused empty data structure at the end of the list)
+	3.040 - 3.051 anAnimationDesc.anAnimation  [aim_y_4] (frameCount = 1; sectionFrameCount = 1)
+	3.052 - 3.055 anAnimationDesc.anAnimation [aim_y_4] (unused empty data structure at the end of the list)
+	3.056 - 3.067 anAnimationDesc.anAnimation  [aim_p_1] (frameCount = 1; sectionFrameCount = 1)
+	3.068 - 3.071 anAnimationDesc.anAnimation [aim_p_1] (unused empty data structure at the end of the list)
+	3.072 - 3.083 anAnimationDesc.anAnimation  [aim_p_2] (frameCount = 1; sectionFrameCount = 1)
+	3.084 - 3.087 anAnimationDesc.anAnimation [aim_p_2] (unused empty data structure at the end of the list)
+	3.088 - 3.723 theMdlFileData.theSequenceDescs 3
+	3.724 - 3.743 aSeqDesc.theBoneWeights [idle] 5
+	3.744 - 3.745 aSeqDesc.theAnimDescIndexes [idle] 1
+	3.746 - 3.747 [ERROR] Unread bytes (all zeroes) [ 00 00 ]
+	3.748 - 3.767 aSeqDesc.thePoseKeys [turret_aimer_yaw] 5
+	3.768 - 3.787 aSeqDesc.theBoneWeights [turret_aimer_yaw] 5
+	3.788 - 3.795 aSeqDesc.theAnimDescIndexes [turret_aimer_yaw] 4
+	3.796 - 3.807 aSeqDesc.thePoseKeys [turret_aimer_pitch] 3
+	3.808 - 3.827 aSeqDesc.theBoneWeights [turret_aimer_pitch] 5
+	3.828 - 3.831 aSeqDesc.theAnimDescIndexes [turret_aimer_pitch] 2
+	3.832 - 3.847 theMdlFileData.theBodyParts 1
+	3.848 - 3.995 aModel Name = apc_ref.smd
+	3.996 - 4.035 theMdlFileData.thePoseParamDescs 2
+	4.036 - 4.151 aModel.theMeshes 1
+	4.152 - 4.215 theMdlFileData.theTextures 1
+	4.216 - 4.219 theMdlFileData.theTexturePaths 1
+	4.220 - 4.221 theMdlFileData.theSkinFamilies 1
+	4.222 - 4.223 theMdlFileData.theSkinFamilies alignment [ 00 00 ]
+	4.224 - 4.287 theMdlFileData.theLinearBoneTable header
+	4.288 - 4.307 theMdlFileData.theLinearBoneTable.theFlags
+	4.308 - 4.327 theMdlFileData.theLinearBoneTable.theParents
+	4.328 - 4.387 theMdlFileData.theLinearBoneTable.thePositions
+	4.388 - 4.467 theMdlFileData.theLinearBoneTable.theQuaternions
+	4.468 - 4.527 theMdlFileData.theLinearBoneTable.theRotations
+	4.528 - 4.767 theMdlFileData.theLinearBoneTable.thePoseToBoneDataColumns
+	4.768 - 4.827 theMdlFileData.theLinearBoneTable.thePositionScales
+	4.828 - 4.887 theMdlFileData.theLinearBoneTable.theRotationScales
+	4.888 - 4.967 theMdlFileData.theLinearBoneTable.theQAlignments
+	4.968 - 4.968 aSeqDesc.theActivityName = ; aSeqDesc.theActivityName = ; aSeqDesc.theActivityName = 
+	4.969 - 4.990 theMdlFileData.theNameCopy = blu/conscript_apc.mdl; theMdlFileData.theNameCopy = blu/conscript_apc.mdl
+	4.991 - 5.003 theSurfacePropName = metalvehicle; theSurfacePropName = metalvehicle; aBone.theSurfacePropName = metalvehicle; aBone.theSurfacePropName = metalvehicle; aBone.theSurfacePropName = metalvehicle; aBone.theSurfacePropName = metalvehicle; aBone.theSurfacePropName = metalvehicle
+	5.004 - 5.008 aBone.theName = root
+	5.009 - 5.019 aBone.theName = turret_yaw; aPoseParamDesc.theName = turret_yaw
+	5.020 - 5.032 aBone.theName = turret_pitch; aPoseParamDesc.theName = turret_pitch
+	5.033 - 5.044 aBone.theName = muzzle_left; anAttachment.theName = muzzle_left
+	5.045 - 5.057 aBone.theName = muzzle_right; anAttachment.theName = muzzle_right
+	5.058 - 5.065 aHitboxSet.theName = default
+	5.066 - 5.071 anAnimationDesc.theName = @idle
+	5.072 - 5.079 anAnimationDesc.theName = neutral
+	5.080 - 5.087 anAnimationDesc.theName = aim_y_1
+	5.088 - 5.095 anAnimationDesc.theName = aim_y_2
+	5.096 - 5.103 anAnimationDesc.theName = aim_y_3
+	5.104 - 5.111 anAnimationDesc.theName = aim_y_4
+	5.112 - 5.119 anAnimationDesc.theName = aim_p_1
+	5.120 - 5.127 anAnimationDesc.theName = aim_p_2
+	5.128 - 5.132 aSeqDesc.theName = idle
+	5.133 - 5.149 aSeqDesc.theName = turret_aimer_yaw
+	5.150 - 5.168 aSeqDesc.theName = turret_aimer_pitch
+	5.169 - 5.173 aBodyPart.theName = body
+	5.174 - 5.180 aTexture.thePathFileName = apc001
+	5.181 - 5.203 aTexturePath = models\props_vehicles\
+	5.204 - 5.204 END OF FILE + 1 (File size)
+========================

@@ -1,0 +1,7 @@
+
+$DefineBone "root" "" 0 -0.000001 18.017855 0 -89.999982 89.999982 0 0 0 0 0 0
+$DefineBone "turret_yaw" "root" 0 26.606062 -20.666437 89.999982 0 0 0 0 0 0 0 0
+$DefineBone "turret_pitch" "turret_yaw" 16.46423 17.402302 7.587194 0 0 0 0 0 0 0 0 0
+$DefineBone "muzzle_left" "turret_pitch" 33.880272 0 -2.590145 0 0 0 0 0 0 0 0 0
+$DefineBone "muzzle_right" "turret_pitch" 33.880272 0 2.425041 0 0 0 0 0 0 0 0 0
+
