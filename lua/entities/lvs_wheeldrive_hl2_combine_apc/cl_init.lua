@@ -1,21 +1,18 @@
 include("shared.lua")
 
-ENT.TrackSounds = ""
-
 function ENT:UpdatePoseParameters(steer, speed_kmh, engine_rpm, throttle, brake, handbrake, clutch, gear, temperature, fuel, oil, ammeter)
     self:SetPoseParameter("vehicle_steer", steer)
 
     if ( throttle > 0.25 ) then
         if ( !self.bMoving ) then
             self:StopSound("vehicles/apc/apc_slowdown_fast_loop5.wav")
-            self:EmitSound("vehicles/apc/apc_firstgear_loop1.wav", 75, 100, LVS.EngineVolume)
-
+            self:EmitSound("vehicles/apc/apc_firstgear_loop1.wav", 80, 100, LVS.EngineVolume)
             self.bMoving = true
         end
     else
         if ( self.bMoving ) then
             self:StopSound("vehicles/apc/apc_firstgear_loop1.wav")
-            self:EmitSound("vehicles/apc/apc_slowdown_fast_loop5.wav", 75, 100, LVS.EngineVolume)
+            self:EmitSound("vehicles/apc/apc_slowdown_fast_loop5.wav", 80, 100, LVS.EngineVolume)
 
             timer.Simple(1.5, function()
                 if ( IsValid(self) ) then
@@ -30,10 +27,10 @@ end
 
 function ENT:OnEngineActiveChanged(bActive)
     if ( bActive ) then
-        self:EmitSound("vehicles/apc/apc_start_loop3.wav", 75, 100, LVS.EngineVolume)
+        self:EmitSound("vehicles/apc/apc_start_loop3.wav", 80, 100, LVS.EngineVolume)
     else
         self:StopSound("vehicles/apc/apc_start_loop3.wav")
-        self:EmitSound("vehicles/apc/apc_shutdown.wav", 75, 100, LVS.EngineVolume)
+        self:EmitSound("vehicles/apc/apc_shutdown.wav", 80, 100, LVS.EngineVolume)
     end
 end
 
@@ -41,18 +38,7 @@ function ENT:OnSpawn(PObj)
     self.interiorParts = {}
 
     local interiorPos = Vector(-130, 0, 70)
-    local interiorModels = {
-        "models/riggs9162/apc_interior_0.mdl",
-        "models/riggs9162/apc_interior_1.mdl",
-        "models/riggs9162/apc_interior_2.mdl",
-        "models/riggs9162/apc_interior_3.mdl",
-        "models/riggs9162/apc_interior_4.mdl",
-        "models/riggs9162/apc_interior_5.mdl",
-        "models/riggs9162/apc_interior_6.mdl",
-        "models/riggs9162/apc_interior_7.mdl",
-        "models/riggs9162/apc_interior_8.mdl"
-    }
-
+    local interiorModels = {"models/riggs9162/vehicles/combine_apc_interior_0.mdl", "models/riggs9162/vehicles/combine_apc_interior_1.mdl", "models/riggs9162/vehicles/combine_apc_interior_2.mdl", "models/riggs9162/vehicles/combine_apc_interior_3.mdl", "models/riggs9162/vehicles/combine_apc_interior_4.mdl", "models/riggs9162/vehicles/combine_apc_interior_5.mdl", "models/riggs9162/vehicles/combine_apc_interior_6.mdl", "models/riggs9162/vehicles/combine_apc_interior_7.mdl", "models/riggs9162/vehicles/combine_apc_interior_8.mdl"}
     for k, v in ipairs(interiorModels) do
         local interior = ClientsideModel(v, RENDERGROUP_OPAQUE)
         interior:SetPos(self:LocalToWorld(interiorPos))
@@ -60,9 +46,7 @@ function ENT:OnSpawn(PObj)
         interior:SetParent(self)
         interior:Spawn()
         interior:Activate()
-
         interior:SetNoDraw(true)
-
         self.interiorParts[k] = interior
     end
 end
@@ -95,14 +79,13 @@ function ENT:Draw()
     else
         for k, v in ipairs(self.interiorParts) do
             if ( !IsValid(v) ) then
-                for k, v in ipairs(self.interiorParts) do
-                    if ( IsValid(v) ) then
-                        v:Remove()
+                for k2, v2 in ipairs(self.interiorParts) do
+                    if ( IsValid(v2) ) then
+                        v2:Remove()
                     end
                 end
 
                 self.interiorParts = {}
-
                 return
             end
 

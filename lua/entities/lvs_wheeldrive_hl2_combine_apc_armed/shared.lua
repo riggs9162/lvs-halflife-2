@@ -1,74 +1,23 @@
-ENT.Base = "lvs_tank_wheeldrive"
-
+ENT.Base = "lvs_wheeldrive_hl2_combine_apc"
 ENT.PrintName = "Combine APC (Armed)"
-ENT.Author = "Riggs"
-ENT.Information = ""
 ENT.Category = "[LVS] - Half Life 2"
-ENT.IconOverride = "materials/entities/combineapc_armed.png"
+ENT.IconOverride = "materials/entities/lvs/hl2/combine_apc_armed.png"
 
 ENT.Spawnable = true
-ENT.AdminSpawnable = false
-
 ENT.VehicleCategory = "Half Life 2"
 ENT.VehicleSubCategory = "Combine"
-
-ENT.MDL = "models/combine_apc_driveable.mdl"
-ENT.MDL_DESTROYED = "models/combine_apc_destroyed_gib01.mdl"
-
-ENT.GibModels = {
-    "models/combine_apc_destroyed_gib02.mdl",
-    "models/combine_apc_destroyed_gib03.mdl",
-    "models/combine_apc_destroyed_gib04.mdl",
-    "models/combine_apc_destroyed_gib05.mdl",
-    "models/combine_apc_destroyed_gib06.mdl",
-}
-
-ENT.AITEAM = 1
-
-ENT.TransGears = 1
-ENT.TransGearsReverse = 1
-
-ENT.EngineSounds = {}
-
-ENT.Lights = {
-    {
-        Trigger = "high",
-        Sprites = {
-            {pos = Vector(102,0,60), colorR = 0, colorG = 180, colorB = 220, colorA = 150, size = 60},
-            {pos = Vector(100,-3,56), colorR = 0, colorG = 180, colorB = 220, colorA = 150, size = 20}
-        },
-        ProjectedTextures = {
-            {pos = Vector(102,0,60), ang = Angle(0,0,0), colorR = 0, colorG = 180, colorB = 220, colorA = 150, shadows = false, brightness = 10, farz = 3072, fov = 90}
-        },
-    },
-    {
-        Trigger = "main",
-        Sprites = {
-            {pos = Vector(102,0,60), colorR = 0, colorG = 180, colorB = 220, colorA = 150, size = 60},
-            {pos = Vector(100,-3,56), colorR = 0, colorG = 180, colorB = 220, colorA = 150, size = 20}
-        },
-        ProjectedTextures = {
-            {pos = Vector(102,0,60.5), ang = Angle(10,0,0), colorR = 0, colorG = 180, colorB = 220, colorA = 150, shadows = false, brightness = 4, farz = 3072, fov = 90}
-        },
-    },
-}
 
 include("entities/lvs_tank_wheeldrive/modules/sh_turret.lua")
 include("entities/lvs_tank_wheeldrive/modules/sh_turret_ballistics.lua")
 
-ENT.TurretBallisticsProjectileVelocity = ENT.ProjectileVelocityCoaxial
 ENT.TurretBallisticsmuzzleAttachment = "muzzle"
-
 ENT.TurretAimRate = 100
-
 ENT.TurretRotationSound = "vehicles/tank_turret_loop1.wav"
-
 ENT.TurretPitchPoseParameterName = "vehicle_weapon_pitch"
 ENT.TurretPitchMin = -15
 ENT.TurretPitchMax = 15
 ENT.TurretPitchMul = 1
 ENT.TurretPitchOffset = 0
-
 ENT.TurretYawPoseParameterName = "vehicle_weapon_yaw"
 ENT.TurretYawMin = -100
 ENT.TurretYawMax = 170
@@ -101,10 +50,9 @@ function ENT:InitWeapons()
     weapon.HeatRateDown = 0.5
     weapon.Attack = function(ent)
         local muzzle = ent:GetAttachment(ent:LookupAttachment("muzzle"))
-        if ( !muzzle ) then return end
+        if !muzzle then return end
 
         local spread = tonumber(GetConVar("lvs_car_hl2_combineapc_spread"):GetString())
-
         local bullet = {}
         bullet.Src = muzzle.Pos
         bullet.Dir = muzzle.Ang:Forward()
@@ -123,12 +71,10 @@ function ENT:InitWeapons()
             effectData:SetOrigin(tr.HitPos)
             effectData:SetScale(6000)
             util.Effect("AirboatGunHeavyTracer", effectData)
-
             effectData = EffectData()
-            effectData:SetOrigin( tr.HitPos + tr.HitNormal)
+            effectData:SetOrigin(tr.HitPos + tr.HitNormal)
             effectData:SetNormal(tr.HitNormal)
             util.Effect("AR2Impact", effectData, true, true)
-
             effectData = EffectData()
             effectData:SetEntity(ent)
             effectData:SetAttachment(ent:LookupAttachment("muzzle"))
@@ -138,26 +84,17 @@ function ENT:InitWeapons()
         end
 
         local physicsObject = ent:GetPhysicsObject()
-        if ( IsValid(physicsObject) ) then
-            physicsObject:ApplyForceOffset(-muzzle.Ang:Forward() * 15000, muzzle.Pos)
-        end
-
+        if IsValid(physicsObject) then physicsObject:ApplyForceOffset(-muzzle.Ang:Forward() * 15000, muzzle.Pos) end
         ent:EmitSound("LVS.HL2.CombineAPC.Fire")
-
         ent:LVSFireBullet(bullet)
-
         ent:TakeAmmo(1)
     end
-    weapon.FinishAttack = function(ent)
-        ent:EmitSound("LVS.HL2.CombineAPC.FireLast")
-    end
-    weapon.OnOverheat = function(ent)
-        ent:EmitSound("lvs/overheat.wav")
-    end
+
+    weapon.FinishAttack = function(ent) ent:EmitSound("LVS.HL2.CombineAPC.FireLast") end
+    weapon.OnOverheat = function(ent) ent:EmitSound("lvs/overheat.wav") end
     weapon.HudPaint = function(ent, X, Y, client)
         local muzzle = ent:GetAttachment(ent:LookupAttachment("muzzle"))
-        if ( !muzzle ) then return end
-
+        if !muzzle then return end
         local traceTurret = util.TraceLine({
             start = muzzle.Pos,
             endpos = muzzle.Pos + muzzle.Ang:Forward() * 50000,
@@ -179,57 +116,42 @@ function ENT:InitWeapons()
     weapon.HeatRateDown = 0.75
     weapon.Attack = function(ent)
         local muzzle = ent:GetAttachment(ent:LookupAttachment("cannon_muzzle"))
-        if ( !muzzle ) then return end
-
+        if !muzzle then return end
         ent:EmitSound("PropAPC.FireCannon")
-
         local Driver = ent:GetDriver()
         local Target = ent:GetEyeTrace().HitPos
-
         local projectile = ents.Create("lvs_missile")
         projectile:SetPos(muzzle.Pos)
         projectile:SetAngles(muzzle.Ang)
         projectile:SetParent(ent)
         projectile:Spawn()
         projectile:Activate()
-        projectile.GetTarget = function(missile)
-            return missile
-        end
+        projectile.GetTarget = function(missile) return missile end
         projectile.GetTargetPos = function(missile)
-            if ( missile.HasReachedTarget ) then
-                return missile:LocalToWorld(Vector(100,0,0))
-            end
-
-            if ( missile:GetPos() - Target ):Length() < 100 then
-                missile.HasReachedTarget = true
-            end
-
+            if missile.HasReachedTarget then return missile:LocalToWorld(Vector(100, 0, 0)) end
+            if (missile:GetPos() - Target):Length() < 100 then missile.HasReachedTarget = true end
             return Target
         end
+
         projectile:SetAttacker(IsValid(Driver) and Driver or self)
         projectile:SetEntityFilter(ent:GetCrosshairFilterEnts())
         projectile:SetSpeed(ent:GetVelocity():Length() + tonumber(GetConVar("lvs_car_hl2_combineapc_rocketspeed"):GetString()))
         projectile:SetDamage(tonumber(GetConVar("lvs_car_hl2_combineapc_rocketdamage"):GetString()))
         projectile:SetRadius(tonumber(GetConVar("lvs_car_hl2_combineapc_rocketradius"):GetString()))
         projectile:Enable()
-
         local physicsObject = ent:GetPhysicsObject()
-        if ( IsValid(physicsObject) ) then
-            physicsObject:ApplyForceOffset(-muzzle.Ang:Forward() * 100000, muzzle.Pos)
-        end
-
+        if IsValid(physicsObject) then physicsObject:ApplyForceOffset(-muzzle.Ang:Forward() * 100000, muzzle.Pos) end
         local effectData = EffectData()
         effectData:SetOrigin(muzzle.Pos)
         effectData:SetNormal(muzzle.Ang:Forward())
         effectData:SetEntity(ent)
         util.Effect("lvs_muzzle", effectData)
-
         ent:TakeAmmo(1)
     end
+
     weapon.HudPaint = function(ent, X, Y, client)
         local muzzle = ent:GetAttachment(ent:LookupAttachment("muzzle"))
-        if ( !muzzle ) then return end
-
+        if !muzzle then return end
         local traceTurret = util.TraceLine({
             start = muzzle.Pos,
             endpos = muzzle.Pos + muzzle.Ang:Forward() * 50000,
@@ -249,16 +171,8 @@ function ENT:InitWeapons()
     weapon.Delay = 0
     weapon.HeatRateUp = 0
     weapon.HeatRateDown = 0
-    weapon.OnSelect = function(ent)
-        if ( ent.SetTurretEnabled ) then
-            ent:SetTurretEnabled(false)
-        end
-    end
-    weapon.OnDeselect = function(ent)
-        if ( ent.SetTurretEnabled ) then
-            ent:SetTurretEnabled(true)
-        end
-    end
+    weapon.OnSelect = function(ent) if ent.SetTurretEnabled then ent:SetTurretEnabled(false) end end
+    weapon.OnDeselect = function(ent) if ent.SetTurretEnabled then ent:SetTurretEnabled(true) end end
 
     self:AddWeapon(weapon)
 end
