@@ -116,6 +116,12 @@ end
 function ENT:DrawLightProp()
     if ( !IsValid(self.LightProp) ) then return end
 
+    if ( self.MDL_DESTROYED and self:GetModel() == self.MDL_DESTROYED ) then
+        self.LightProp:Remove()
+        self.LightProp = nil
+        return
+    end
+
     self.LightProp:DrawModel()
 end
 

@@ -47,7 +47,12 @@ function ENT:OnSpawn(PObj)
 end
 
 function ENT:Draw()
-    if !self.LightProp then
+    if ( self.MDL_DESTROYED and self:GetModel() == self.MDL_DESTROYED ) then
+        if ( IsValid(self.LightProp) ) then
+            self.LightProp:Remove()
+            self.LightProp = nil
+        end
+    elseif !self.LightProp then
         self.LightProp = ClientsideModel("models/props_combine/combine_light001a.mdl")
         self.LightProp:SetPos(self:LocalToWorld(Vector(0, 95, 34)))
         self.LightProp:SetAngles(self:GetAngles() + Angle(0, -90, 0))
