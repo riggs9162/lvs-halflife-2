@@ -1,0 +1,114 @@
+
+$PoseParameter "turret_yaw" -180 180 loop 360
+$PoseParameter "turret_pitch" -20 75 loop 0
+
+$WeightList "weights_turret_aimer_yaw" {
+	 "root" 0
+	 "turret_yaw" 1
+	 "turret_pitch" 1
+	 "muzzle_left" 1
+	 "muzzle_right" 1
+}
+
+$WeightList "weights_turret_aimer_pitch" {
+	 "root" 0
+	 "turret_yaw" 0
+	 "turret_pitch" 1
+	 "muzzle_left" 1
+	 "muzzle_right" 1
+}
+
+$Animation "aim_y_1_corrective_animation" "conscript_apc_anims\aim_y_1_corrective_animation.smd" {
+}
+
+$Animation "aim_y_2_corrective_animation" "conscript_apc_anims\aim_y_2_corrective_animation.smd" {
+}
+
+$Animation "aim_y_3_corrective_animation" "conscript_apc_anims\aim_y_3_corrective_animation.smd" {
+}
+
+$Animation "aim_y_4_corrective_animation" "conscript_apc_anims\aim_y_4_corrective_animation.smd" {
+}
+
+$Animation "aim_p_1_corrective_animation" "conscript_apc_anims\aim_p_1_corrective_animation.smd" {
+}
+
+$Animation "aim_p_2_corrective_animation" "conscript_apc_anims\aim_p_2_corrective_animation.smd" {
+}
+
+$Animation "neutral" "conscript_apc_anims\neutral.smd" {
+	fps 30
+}
+
+$Animation "aim_y_1" "conscript_apc_anims\aim_y_1.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "aim_y_1_corrective_animation" 0
+	weightlist "weights_turret_aimer_yaw"
+}
+
+$Animation "aim_y_2" "conscript_apc_anims\aim_y_2.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "aim_y_2_corrective_animation" 0
+	weightlist "weights_turret_aimer_yaw"
+}
+
+$Animation "aim_y_3" "conscript_apc_anims\aim_y_3.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "aim_y_3_corrective_animation" 0
+	weightlist "weights_turret_aimer_yaw"
+}
+
+$Animation "aim_y_4" "conscript_apc_anims\aim_y_4.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "aim_y_4_corrective_animation" 0
+	weightlist "weights_turret_aimer_yaw"
+}
+
+$Animation "aim_p_1" "conscript_apc_anims\aim_p_1.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "aim_p_1_corrective_animation" 0
+	weightlist "weights_turret_aimer_pitch"
+}
+
+$Animation "aim_p_2" "conscript_apc_anims\aim_p_2.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "aim_p_2_corrective_animation" 0
+	weightlist "weights_turret_aimer_pitch"
+}
+
+$Sequence "idle" {
+	"conscript_apc_anims\idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+}
+
+$Sequence "turret_aimer_yaw" {
+	"aim_y_1"
+	"aim_y_2"
+	"aim_y_3"
+	"aim_y_4"
+	autoplay
+	blend "turret_yaw" -180 180
+	blendwidth 4
+	delta
+	fadein 0.2
+	fadeout 0.2
+}
+
+$Sequence "turret_aimer_pitch" {
+	"aim_p_1"
+	"aim_p_2"
+	autoplay
+	blend "turret_pitch" 75 -20
+	blendwidth 2
+	delta
+	fadein 0.2
+	fadeout 0.2
+}
